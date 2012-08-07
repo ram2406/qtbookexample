@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    int i = 1;
+    int i = 3;
     switch(i)
     {
         case 0: //стандартное отображение

@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'sortdialog.ui'
 **
-** Created: Wed 25. Jul 10:07:07 2012
-**      by: Qt User Interface Compiler version 4.7.4
+** Created: Tue Aug 7 22:27:39 2012
+**      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -49,7 +49,6 @@ public:
     QSpacerItem *horizontalSpacer_3;
     QLabel *label_6;
     QComboBox *tretiaryOrderCombo;
-    QSpacerItem *verticalSpacer_2;
     QGroupBox *secondaryGroupBox;
     QGridLayout *gridLayout_2;
     QLabel *label_3;
@@ -63,6 +62,7 @@ public:
         if (Dialog->objectName().isEmpty())
             Dialog->setObjectName(QString::fromUtf8("Dialog"));
         Dialog->resize(303, 286);
+        Dialog->setMinimumSize(QSize(303, 286));
         gridLayout_4 = new QGridLayout(Dialog);
         gridLayout_4->setObjectName(QString::fromUtf8("gridLayout_4"));
         primaryGroupBox = new QGroupBox(Dialog);
@@ -151,12 +151,9 @@ public:
 
         gridLayout_4->addWidget(TretiaryGroupBox, 6, 0, 1, 2);
 
-        verticalSpacer_2 = new QSpacerItem(20, 96, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        gridLayout_4->addItem(verticalSpacer_2, 3, 0, 1, 1);
-
         secondaryGroupBox = new QGroupBox(Dialog);
         secondaryGroupBox->setObjectName(QString::fromUtf8("secondaryGroupBox"));
+        secondaryGroupBox->setEnabled(true);
         gridLayout_2 = new QGridLayout(secondaryGroupBox);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         label_3 = new QLabel(secondaryGroupBox);
@@ -184,7 +181,7 @@ public:
         gridLayout_2->addWidget(secondaryOrderCombo, 1, 1, 1, 2);
 
 
-        gridLayout_4->addWidget(secondaryGroupBox, 4, 0, 1, 1);
+        gridLayout_4->addWidget(secondaryGroupBox, 4, 0, 1, 2);
 
         QWidget::setTabOrder(primaryColumnCombo, primaryOrderCombo);
         QWidget::setTabOrder(primaryOrderCombo, secondaryColumnCombo);

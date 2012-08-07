@@ -5,6 +5,9 @@ SortDialog::SortDialog(QWidget *parent):QDialog(parent)
 {
     setupUi(this);
 
+    //необходимо для работы сигнала toggle (переключить)
+    cancelButton_2->setCheckable(true);
+
     secondaryGroupBox->hide();
     TretiaryGroupBox->hide();
 
