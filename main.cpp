@@ -1,41 +1,42 @@
 #include <QtGui/QApplication>
 #include "mainwindow.h"
-//мои загатовки>
+
 #include "gotocelldialog/gotocelldialog.h"
 #include "fdialog/finddialog.h"
 #include "sortdialog/sortdialog.h"
-//<мои заготовки
+
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    int i = 3;
+    int i = 0;
     switch(i)
     {
-        case 0: //стандартное отображение
+        case 0:
         {
-            MainWindow w;
-            w.show();
+            MainWindow *w = new MainWindow;
+            w->show();
 
         };break;
-        case 1: //тест  GoToCellDialog
+        case 1:
         {
             GoToCellDialog *dialog=  new GoToCellDialog;
             dialog->show();
 
-        }; break;
-        case 2: //тест  fdialog
+        };// break;
+        case 2:
         {
             FindDialog *dialog=  new FindDialog;
             dialog->show();
 
 
-        }; break;
-        case 3: //тест  sortdialog
+        };// break;
+        case 3:
         {
             SortDialog *dialog=  new SortDialog;
             //dialog->setColumnRange('A','Z');
+
             dialog->show();
 
 
@@ -50,5 +51,6 @@ int main(int argc, char *argv[])
 }
 
 
-//25.07.2012    прописал логику формы перейти к колонке
-//              необходимо прописать логику формы сортировки
+//25.07.2012
+//03.03.2013
+//

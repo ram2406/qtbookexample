@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Resource/excel.png</file>
+        <file>Resource/Actions-document-save-as-icon.png</file>
+        <file>Resource/file-icon.png</file>
+        <file>Resource/Files-Folder-icon.png</file>
+    </qresource>
+</RCC>

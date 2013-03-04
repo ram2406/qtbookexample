@@ -14,7 +14,7 @@ SortDialog::SortDialog(QWidget *parent):QDialog(parent)
     layout()->setSizeConstraint(QLayout::SetFixedSize);
 
     setColumnRange('A','Z');
-
+    setWindowIcon(QIcon(":/Resource/excel.png"));
 }
 void SortDialog::setColumnRange(QChar first, QChar last)
 {
