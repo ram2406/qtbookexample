@@ -5,6 +5,8 @@
 #include "sortdialog/sortdialog.h"
 #include "spreadsheet.h"
 
+QStringList MainWindow::recentFiles = QStringList();
+
 MainWindow::MainWindow()
 {
 
@@ -24,7 +26,7 @@ MainWindow::MainWindow()
     setWindowIcon(QIcon(":/Resource/excel.png"));
     setCurrentFile("");
 
-
+    //setAttribute(Qt::WA_DeleteOnClose);
 }
 void MainWindow::createActions()
 {
@@ -88,6 +90,7 @@ void MainWindow::createActions()
     this->cutAction = new QAction(tr("&Cut"), this);
     cutAction->setStatusTip( tr("Cut") );
     cutAction->setShortcut( tr("Ctrl+X") );
+
     //connect(cutAction, SIGNAL(triggered()), this, SLOT(cu))
 
     this->pasteAction        = new QAction(tr("&Paste"), this);
@@ -104,10 +107,12 @@ void MainWindow::createActions()
     this->findAction         = new QAction(tr("Find"), this);
     findAction->setStatusTip( tr("Find a text..."));
     findAction->setShortcut( tr("Ctrl+F"));
+    findAction->setIcon(QIcon(tr(":/Resource/normal/png/24x24/Search.png")));
     connect(findAction, SIGNAL(triggered()), this, SLOT(find()));
     this->goToCellAction     = new QAction(tr("Go to cell"), this);
     goToCellAction->setStatusTip("Go to cell...");
     goToCellAction->setShortcut( tr("Ctrl+G") );
+    goToCellAction->setIcon(QIcon(tr(":/Resource/normal/png/24x24/Right.png")));
     connect(goToCellAction, SIGNAL(triggered()), this, SLOT(goToCell()));
     this->recalculateAction  = new QAction(tr("&Recalculate"), this);
     this->sortAction         = new QAction(tr("&Sort"), this);
@@ -117,6 +122,11 @@ void MainWindow::createActions()
     this->aboutAction        = new QAction(tr("&About"), this);
     aboutAction->setStatusTip(tr("About of this application..."));
     connect(this->aboutAction, SIGNAL(triggered()), this, SLOT(about()));
+
+    closeAction = new QAction(this);
+    closeAction->setShortcut(tr("ESC"));
+    closeAction->setStatusTip(tr("Close window"));
+    connect(closeAction, SIGNAL(triggered()), this, SLOT(close()));
 }
 
 
@@ -284,7 +294,7 @@ void MainWindow::setCurrentFile(const QString &fileName){
     setWindowTitle(tr("%1[*] - %2").arg(showName).arg(tr("Spreadsheet")));
 
 }
-void MainWindow::updateRecentFileActions(){
+void MainWindow::updateRecentFilesItems() {
     QMutableStringListIterator i(recentFiles);
     while (i.hasNext()) {
         if(!QFile::exists(i.next())) {
@@ -305,6 +315,14 @@ void MainWindow::updateRecentFileActions(){
     }
     separatorAction->setVisible(!recentFiles.isEmpty());
 }
+
+void MainWindow::updateRecentFileActions(){
+    foreach(QWidget *win, QApplication::topLevelWidgets()) {
+        if(MainWindow *mainWin = qobject_cast<MainWindow*>(win)) {
+            mainWin->updateRecentFilesItems();
+        }
+    }
+}
 QString MainWindow::strippedName(const QString &fullFileName){
     return QFileInfo(fullFileName).fileName();
 }
@@ -312,10 +330,13 @@ QString MainWindow::strippedName(const QString &fullFileName){
 //protected slots
 
 void MainWindow::newFile(){
-    if(okToContinue()) {
+
+    MainWindow *mainWin = new MainWindow();
+    mainWin->show();
+    /*if(okToContinue()) {
         spreadsheet->clear();
         setCurrentFile("");
-    }
+    }*/
 }
 void MainWindow::open(){
     if(okToContinue()) {

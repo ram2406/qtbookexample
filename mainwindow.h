@@ -50,13 +50,14 @@ private:
     void setCurrentFile(const QString &fileName);
     void updateRecentFileActions();
     QString strippedName(const QString &fullFileName);
+    void updateRecentFilesItems();
 
     Spreadsheet *spreadsheet;
     FindDialog *findDialog;
     QLabel *locationLabel;
     QLabel *formulaLabel;
 
-    QStringList recentFiles;
+    static QStringList recentFiles;
     QString curFile;
 
     enum { MaxRecentFiles = 5 };
@@ -99,6 +100,7 @@ private:
     QAction *sortAction;
     QAction *autoRecalcAction;
     QAction *aboutAction;
+    QAction *closeAction;
 };
 
 #endif // MAINWINDOW_H
