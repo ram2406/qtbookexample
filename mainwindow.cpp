@@ -10,7 +10,8 @@ MainWindow::MainWindow()
 
     spreadsheet = new Spreadsheet;
     setCentralWidget(spreadsheet);
-
+    spreadsheet->setColumnCount(25);
+    spreadsheet->setRowCount(25);
     createActions();
     createMenues();
     createContextMenu();
@@ -29,7 +30,7 @@ void MainWindow::createActions()
 {
     //file menu
     newAction = new QAction(tr("&New"),this);
-    newAction->setIcon(QIcon(":/Resource/file-icon.png"));
+    newAction->setIcon(QIcon(":/Resource/normal/png/24x24/Document.png"));
     newAction->setShortcut(QKeySequence::New);
     newAction->setStatusTip(tr("Create a new spreadsheet file"));
     connect(newAction, SIGNAL(triggered()), this, SLOT(newFile()));
@@ -45,7 +46,7 @@ void MainWindow::createActions()
 
     this->exitAction = new QAction(tr("E&xit"),this);
     this->exitAction->setShortcut(tr("Ctrl+Q"));
-
+    exitAction->setIcon(QIcon(tr(":/Resource/normal/png/24x24/Exit.png")));
     this->exitAction->setStatusTip(tr("Exit the application"));
     connect(this->exitAction,SIGNAL(triggered()),this,SLOT(close()));
 
@@ -67,18 +68,20 @@ void MainWindow::createActions()
     this->saveAction = new QAction(tr("&Save"), this);
     saveAction->setStatusTip("Save document");
     saveAction->setShortcut(tr("Ctrl+S"));
-    saveAction->setIcon(QIcon(tr(":/Resource/Actions-document-save-as-icon.png")));
+    saveAction->setIcon(QIcon(tr(":/Resource/normal/png/24x24/Save.png")));
     connect(saveAction,SIGNAL(triggered()), this, SLOT(save()));
 
     this->saveAsAction = new QAction(tr("&Save as"), this);
     saveAsAction->setStatusTip(tr("Save as.. document"));
     saveAsAction->setShortcut(tr("Ctrl+Shift+S"));
+    saveAsAction->setIcon(QIcon(tr(":/Resource/normal/png/24x24/Save as.png")));
     connect(saveAsAction,SIGNAL(triggered()), this, SLOT(saveAs()));
 
     this->openAction = new QAction(tr("&Open"), this);
     openAction->setStatusTip(tr("Open the document"));
     openAction->setIcon(QIcon(tr(":/Resource/Files-Folder-icon.png")));
     openAction->setShortcut(tr("Ctrl+O"));
+    openAction->setIcon(QIcon(tr(":/Resource/normal/png/24x24/Open file.png")));
     connect(openAction, SIGNAL(triggered()), this, SLOT(open()));
 
     //edit menu
@@ -89,19 +92,31 @@ void MainWindow::createActions()
 
     this->pasteAction        = new QAction(tr("&Paste"), this);
     pasteAction->setShortcut(tr("Ctrl+V"));
+    pasteAction->setStatusTip(tr("Paste"));
     this->copyAction         = new QAction(tr("C&opy"), this);
     copyAction->setShortcut(tr("Ctrl+C"));
+    copyAction->setStatusTip(tr("Copy"));
     this->deleteAction       = new QAction(tr("&Delete"), this);
     deleteAction->setShortcut(tr("Del"));
-
+    deleteAction->setStatusTip(tr("Delete"));
     this->selectColumnAction = new QAction(tr("Select Column"), this);
     this->selectRowAction    = new QAction(tr("Select Row"), this);
     this->findAction         = new QAction(tr("Find"), this);
+    findAction->setStatusTip( tr("Find a text..."));
+    findAction->setShortcut( tr("Ctrl+F"));
+    connect(findAction, SIGNAL(triggered()), this, SLOT(find()));
     this->goToCellAction     = new QAction(tr("Go to cell"), this);
+    goToCellAction->setStatusTip("Go to cell...");
+    goToCellAction->setShortcut( tr("Ctrl+G") );
+    connect(goToCellAction, SIGNAL(triggered()), this, SLOT(goToCell()));
     this->recalculateAction  = new QAction(tr("&Recalculate"), this);
     this->sortAction         = new QAction(tr("&Sort"), this);
+    sortAction->setStatusTip(tr("Set sort rule..."));
+    connect(sortAction, SIGNAL(triggered()), this, SLOT(sort()));
     this->autoRecalcAction   = new QAction(tr("&Auto Recalculate"), this);
     this->aboutAction        = new QAction(tr("&About"), this);
+    aboutAction->setStatusTip(tr("About of this application..."));
+    connect(this->aboutAction, SIGNAL(triggered()), this, SLOT(about()));
 }
 
 
@@ -200,8 +215,25 @@ void MainWindow::createStatusBar(){
     updateStatusBar();
 }
 
-void MainWindow::readSettings(){}
-void MainWindow::writeSettings(){}
+void MainWindow::readSettings(){
+    QSettings settings("Software Inc.", "Spreadsheet");
+    restoreGeometry(settings.value( "geometry").toByteArray());
+    recentFiles = settings.value("recentFiles").toStringList();
+    updateRecentFileActions();
+    bool showGrid = settings.value("showGrid", true).toBool();
+    showGridAction->setChecked(showGrid);
+    bool autoRecalc = settings.value("autoRecalc", true).toBool();
+    autoRecalcAction->setChecked(autoRecalc);
+}
+
+void MainWindow::writeSettings(){
+    QSettings settings("Software Inc.", "Spreadsheet");
+    settings.setValue("geometry", saveGeometry());
+    settings.setValue("recent Files", recentFiles);
+    settings.setValue("showGrid", showGridAction->isChecked());
+    settings.setValue("autoRecalc", autoRecalcAction->isChecked());
+}
+
 bool MainWindow::okToContinue(){
     if(isWindowModified()) {
         int r = QMessageBox::warning(this, tr("Spreadsheet")
@@ -214,9 +246,10 @@ bool MainWindow::okToContinue(){
         if(r== QMessageBox::Cancel) {
             return false;
         }
-        return true;
+
 
     }
+   return true;
 }
 bool MainWindow::loadFile(const QString &fileName){
     if(!spreadsheet->readFile(fileName)) {
@@ -310,10 +343,60 @@ bool MainWindow::saveAs(){
 
     return saveFile(fileName);
 }
-void MainWindow::find(){}
-void MainWindow::goToCell(){}
-void MainWindow::sort(){}
-void MainWindow::about(){}
+void MainWindow::find(){
+    if(!findDialog) {
+
+        findDialog = new FindDialog(this);
+        connect(findDialog, SIGNAL(findNext(QString,Qt::CaseSensitivity))
+                , spreadsheet, SLOT(findNext(QString,Qt::CaseSensitivity)));
+        connect(findDialog, SIGNAL(findPrev(QString,Qt::CaseSensitivity))
+                , spreadsheet, SLOT(findPrevios(QString,Qt::CaseSensitivity)));
+    }
+    findDialog->show();             //показываеи, если уже игнорится.
+    findDialog->raise();            //показываем поверх
+    findDialog->activateWindow();   //получаем фокус
+}
+void MainWindow::goToCell(){
+    GoToCellDialog dialog(this);
+    if(dialog.exec()) {
+        QString str = dialog.lineEdit->text().toUpper();
+        spreadsheet->setCurrentCell(str.mid(1).toInt()- 1, str[0].unicode() - 'A');
+    }
+}
+void MainWindow::sort() {
+    SortDialog dialog(this);
+    QTableWidgetSelectionRange range = spreadsheet->selectedRanges()[0];
+    dialog.setColumnRange('A' + range.leftColumn(),   'A' + range.rightColumn());
+
+    if (dialog.exec()) {
+        /*
+        SpreadsheetCompare compare;
+        compare.keys[0] =
+        dialog.primaryColumnCombo->currentIndex();
+        compare.keys[1] =
+        dialog.secondaryColumnCombo->currentIndex() - 1;
+        compare.keys[2] =
+        dialog.tertiaryColumnCombo->currentIndex() - 1;
+        compare.ascending[0] =
+        (dialog.primaryOrderCombo->currentIndex() == 0);
+        compare.ascending[1] =
+        (dialog.secondaryOrderCombo->currentIndex() == 0);
+        compare.ascending[2] =
+        (dialog.tertiaryOrderCombo->currentIndex() == 0);
+        spreadsheet->sort(compare);
+        */
+    }
+}
+void MainWindow::about(){
+    QMessageBox::about(this, tr("About Spreadsheet")
+                       , tr("<h2>Spreadsheet 1.1</h2>"
+                            "<p>Copyright &copy; 2013 Software Inc."
+                            "<p>Spreadsheet is a small application that "
+                            "demonstrates QAction, QMainWindow, QMenuBar, "
+                            "QStatusBar, QTableWidget, QToolBar, and many other "
+                            "Qt classes."
+                            "<p align=\"right\">ram2406 </p><p>"));
+}
 void MainWindow::openRecentFile(){
     if(okToContinue()) {
         QAction *action = qobject_cast<QAction*>(sender());
@@ -335,6 +418,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
     if(okToContinue()) {
         writeSettings();
         event->accept();
+        return;
     }
     event->ignore();
 

@@ -1,8 +1,181 @@
 <RCC>
     <qresource prefix="/">
         <file>Resource/excel.png</file>
-        <file>Resource/Actions-document-save-as-icon.png</file>
-        <file>Resource/file-icon.png</file>
-        <file>Resource/Files-Folder-icon.png</file>
+        <file>Resource/normal/png/24x24/Company.png</file>
+        <file>Resource/normal/png/24x24/Accept.png</file>
+        <file>Resource/normal/png/24x24/Add to basket.png</file>
+        <file>Resource/normal/png/24x24/Add.png</file>
+        <file>Resource/normal/png/24x24/Address book.png</file>
+        <file>Resource/normal/png/24x24/Alarm.png</file>
+        <file>Resource/normal/png/24x24/Anchor.png</file>
+        <file>Resource/normal/png/24x24/Application form.png</file>
+        <file>Resource/normal/png/24x24/Bar chart.png</file>
+        <file>Resource/normal/png/24x24/Basket.png</file>
+        <file>Resource/normal/png/24x24/Bell.png</file>
+        <file>Resource/normal/png/24x24/Best.png</file>
+        <file>Resource/normal/png/24x24/Billboard.png</file>
+        <file>Resource/normal/png/24x24/Bluetooth.png</file>
+        <file>Resource/normal/png/24x24/Bomb.png</file>
+        <file>Resource/normal/png/24x24/Book.png</file>
+        <file>Resource/normal/png/24x24/Bookmark.png</file>
+        <file>Resource/normal/png/24x24/Box.png</file>
+        <file>Resource/normal/png/24x24/Boy.png</file>
+        <file>Resource/normal/png/24x24/Brick house.png</file>
+        <file>Resource/normal/png/24x24/Bricks.png</file>
+        <file>Resource/normal/png/24x24/Brief case.png</file>
+        <file>Resource/normal/png/24x24/Brightness.png</file>
+        <file>Resource/normal/png/24x24/Bubble.png</file>
+        <file>Resource/normal/png/24x24/Buddy.png</file>
+        <file>Resource/normal/png/24x24/Cable.png</file>
+        <file>Resource/normal/png/24x24/Calculator.png</file>
+        <file>Resource/normal/png/24x24/Calendar.png</file>
+        <file>Resource/normal/png/24x24/Call.png</file>
+        <file>Resource/normal/png/24x24/Camera.png</file>
+        <file>Resource/normal/png/24x24/Card file.png</file>
+        <file>Resource/normal/png/24x24/Cash register.png</file>
+        <file>Resource/normal/png/24x24/Cat.png</file>
+        <file>Resource/normal/png/24x24/Certificate.png</file>
+        <file>Resource/normal/png/24x24/Clien list.png</file>
+        <file>Resource/normal/png/24x24/Clipboard.png</file>
+        <file>Resource/normal/png/24x24/Clock.png</file>
+        <file>Resource/normal/png/24x24/Closed door.png</file>
+        <file>Resource/normal/png/24x24/Closed folder.png</file>
+        <file>Resource/normal/png/24x24/Coin.png</file>
+        <file>Resource/normal/png/24x24/Coins.png</file>
+        <file>Resource/normal/png/24x24/Color wheel.png</file>
+        <file>Resource/normal/png/24x24/Comment.png</file>
+        <file>Resource/normal/png/24x24/Comments.png</file>
+        <file>Resource/normal/png/24x24/Computer.png</file>
+        <file>Resource/normal/png/24x24/Conference.png</file>
+        <file>Resource/normal/png/24x24/Connect.png</file>
+        <file>Resource/normal/png/24x24/Construction.png</file>
+        <file>Resource/normal/png/24x24/Contrast.png</file>
+        <file>Resource/normal/png/24x24/Control panel.png</file>
+        <file>Resource/normal/png/24x24/Create.png</file>
+        <file>Resource/normal/png/24x24/Database.png</file>
+        <file>Resource/normal/png/24x24/Date.png</file>
+        <file>Resource/normal/png/24x24/Delete.png</file>
+        <file>Resource/normal/png/24x24/Desktop.png</file>
+        <file>Resource/normal/png/24x24/Diagram.png</file>
+        <file>Resource/normal/png/24x24/Dice.png</file>
+        <file>Resource/normal/png/24x24/Disconnect.png</file>
+        <file>Resource/normal/png/24x24/Discussion.png</file>
+        <file>Resource/normal/png/24x24/Document.png</file>
+        <file>Resource/normal/png/24x24/Documents.png</file>
+        <file>Resource/normal/png/24x24/Dog.png</file>
+        <file>Resource/normal/png/24x24/Dollar.png</file>
+        <file>Resource/normal/png/24x24/Down.png</file>
+        <file>Resource/normal/png/24x24/Download.png</file>
+        <file>Resource/normal/png/24x24/Edit.png</file>
+        <file>Resource/normal/png/24x24/Euro.png</file>
+        <file>Resource/normal/png/24x24/Exit button.png</file>
+        <file>Resource/normal/png/24x24/Exit.png</file>
+        <file>Resource/normal/png/24x24/Favourites.png</file>
+        <file>Resource/normal/png/24x24/Fax.png</file>
+        <file>Resource/normal/png/24x24/Flash drive.png</file>
+        <file>Resource/normal/png/24x24/Flow block.png</file>
+        <file>Resource/normal/png/24x24/Free.png</file>
+        <file>Resource/normal/png/24x24/Friends.png</file>
+        <file>Resource/normal/png/24x24/Full basket.png</file>
+        <file>Resource/normal/png/24x24/Funny.png</file>
+        <file>Resource/normal/png/24x24/Game controller.png</file>
+        <file>Resource/normal/png/24x24/Gear.png</file>
+        <file>Resource/normal/png/24x24/Genealogy.png</file>
+        <file>Resource/normal/png/24x24/Gift.png</file>
+        <file>Resource/normal/png/24x24/Girl.png</file>
+        <file>Resource/normal/png/24x24/Globe.png</file>
+        <file>Resource/normal/png/24x24/Handshake.png</file>
+        <file>Resource/normal/png/24x24/Happy.png</file>
+        <file>Resource/normal/png/24x24/Hard disk.png</file>
+        <file>Resource/normal/png/24x24/Heart.png</file>
+        <file>Resource/normal/png/24x24/Help.png</file>
+        <file>Resource/normal/png/24x24/Hierarchy.png</file>
+        <file>Resource/normal/png/24x24/Home.png</file>
+        <file>Resource/normal/png/24x24/Hungup.png</file>
+        <file>Resource/normal/png/24x24/Industry.png</file>
+        <file>Resource/normal/png/24x24/Info.png</file>
+        <file>Resource/normal/png/24x24/Key.png</file>
+        <file>Resource/normal/png/24x24/Label.png</file>
+        <file>Resource/normal/png/24x24/Left.png</file>
+        <file>Resource/normal/png/24x24/Lego brick.png</file>
+        <file>Resource/normal/png/24x24/Letter.png</file>
+        <file>Resource/normal/png/24x24/List.png</file>
+        <file>Resource/normal/png/24x24/Lists.png</file>
+        <file>Resource/normal/png/24x24/Lock.png</file>
+        <file>Resource/normal/png/24x24/Log out.png</file>
+        <file>Resource/normal/png/24x24/Login.png</file>
+        <file>Resource/normal/png/24x24/Mail.png</file>
+        <file>Resource/normal/png/24x24/Microsoft.png</file>
+        <file>Resource/normal/png/24x24/Mobile phone.png</file>
+        <file>Resource/normal/png/24x24/Money.png</file>
+        <file>Resource/normal/png/24x24/Monitor.png</file>
+        <file>Resource/normal/png/24x24/Mouse.png</file>
+        <file>Resource/normal/png/24x24/Music.png</file>
+        <file>Resource/normal/png/24x24/No.png</file>
+        <file>Resource/normal/png/24x24/Notes.png</file>
+        <file>Resource/normal/png/24x24/Numbered list.png</file>
+        <file>Resource/normal/png/24x24/OK.png</file>
+        <file>Resource/normal/png/24x24/Online.png</file>
+        <file>Resource/normal/png/24x24/Open door.png</file>
+        <file>Resource/normal/png/24x24/Open file.png</file>
+        <file>Resource/normal/png/24x24/Open folder.png</file>
+        <file>Resource/normal/png/24x24/Open letter.png</file>
+        <file>Resource/normal/png/24x24/Open lock.png</file>
+        <file>Resource/normal/png/24x24/Payment.png</file>
+        <file>Resource/normal/png/24x24/Peace.png</file>
+        <file>Resource/normal/png/24x24/Pets.png</file>
+        <file>Resource/normal/png/24x24/Phone.png</file>
+        <file>Resource/normal/png/24x24/Piggy bank.png</file>
+        <file>Resource/normal/png/24x24/Piggy.png</file>
+        <file>Resource/normal/png/24x24/Pointer.png</file>
+        <file>Resource/normal/png/24x24/Pound.png</file>
+        <file>Resource/normal/png/24x24/Price list.png</file>
+        <file>Resource/normal/png/24x24/Print preview.png</file>
+        <file>Resource/normal/png/24x24/Print.png</file>
+        <file>Resource/normal/png/24x24/Printer.png</file>
+        <file>Resource/normal/png/24x24/Problem.png</file>
+        <file>Resource/normal/png/24x24/Properties.png</file>
+        <file>Resource/normal/png/24x24/Red star.png</file>
+        <file>Resource/normal/png/24x24/Refresh.png</file>
+        <file>Resource/normal/png/24x24/Remove from basket.png</file>
+        <file>Resource/normal/png/24x24/Report.png</file>
+        <file>Resource/normal/png/24x24/Right.png</file>
+        <file>Resource/normal/png/24x24/Rouble.png</file>
+        <file>Resource/normal/png/24x24/RSS.png</file>
+        <file>Resource/normal/png/24x24/Sad.png</file>
+        <file>Resource/normal/png/24x24/Safe.png</file>
+        <file>Resource/normal/png/24x24/Save as.png</file>
+        <file>Resource/normal/png/24x24/Save.png</file>
+        <file>Resource/normal/png/24x24/Scroll list.png</file>
+        <file>Resource/normal/png/24x24/Search.png</file>
+        <file>Resource/normal/png/24x24/Shield.png</file>
+        <file>Resource/normal/png/24x24/Smile.png</file>
+        <file>Resource/normal/png/24x24/Software.png</file>
+        <file>Resource/normal/png/24x24/Statistics.png</file>
+        <file>Resource/normal/png/24x24/Stop.png</file>
+        <file>Resource/normal/png/24x24/Task list.png</file>
+        <file>Resource/normal/png/24x24/Telephone.png</file>
+        <file>Resource/normal/png/24x24/Text.png</file>
+        <file>Resource/normal/png/24x24/Tick.png</file>
+        <file>Resource/normal/png/24x24/To do list.png</file>
+        <file>Resource/normal/png/24x24/Trash.png</file>
+        <file>Resource/normal/png/24x24/Unknown person.png</file>
+        <file>Resource/normal/png/24x24/Unlock.png</file>
+        <file>Resource/normal/png/24x24/Unordered list.png</file>
+        <file>Resource/normal/png/24x24/Up.png</file>
+        <file>Resource/normal/png/24x24/Upload.png</file>
+        <file>Resource/normal/png/24x24/User group.png</file>
+        <file>Resource/normal/png/24x24/User.png</file>
+        <file>Resource/normal/png/24x24/Users.png</file>
+        <file>Resource/normal/png/24x24/Wallet.png</file>
+        <file>Resource/normal/png/24x24/Warning.png</file>
+        <file>Resource/normal/png/24x24/Weather.png</file>
+        <file>Resource/normal/png/24x24/Wireless.png</file>
+        <file>Resource/normal/png/24x24/Wizard.png</file>
+        <file>Resource/normal/png/24x24/Yen.png</file>
+        <file>Resource/normal/png/24x24/Yin-Yang.png</file>
+        <file>Resource/normal/png/24x24/Zoom in.png</file>
+        <file>Resource/normal/png/24x24/Zoom out.png</file>
+        <file>Resource/normal/png/24x24/Zoom.png</file>
     </qresource>
 </RCC>

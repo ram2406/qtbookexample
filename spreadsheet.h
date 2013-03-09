@@ -15,7 +15,8 @@ public:
 signals:
     void modeified();
 public slots:
-
+    void findNext(const QString &, Qt::CaseSensitivity) {}
+    void findPrevios(const QString &, Qt::CaseSensitivity) {}
 };
 
 #endif // SPREADSHEET_H

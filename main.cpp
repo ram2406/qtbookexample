@@ -10,42 +10,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    int i = 0;
-    switch(i)
-    {
-        case 0:
-        {
-            MainWindow *w = new MainWindow;
-            w->show();
-
-        };break;
-        case 1:
-        {
-            GoToCellDialog *dialog=  new GoToCellDialog;
-            dialog->show();
-
-        };// break;
-        case 2:
-        {
-            FindDialog *dialog=  new FindDialog;
-            dialog->show();
-
-
-        };// break;
-        case 3:
-        {
-            SortDialog *dialog=  new SortDialog;
-            //dialog->setColumnRange('A','Z');
-
-            dialog->show();
-
-
-        }; break;
-        case 33:  break;
-    }
-
-
-
+    MainWindow w;
+    w.show();
 
     return a.exec();
 }
