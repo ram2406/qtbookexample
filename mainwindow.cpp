@@ -332,7 +332,9 @@ QString MainWindow::strippedName(const QString &fullFileName){
 void MainWindow::newFile(){
 
     MainWindow *mainWin = new MainWindow();
+    mainWin->setAttribute(Qt::WA_DeleteOnClose);
     mainWin->show();
+
     /*if(okToContinue()) {
         spreadsheet->clear();
         setCurrentFile("");

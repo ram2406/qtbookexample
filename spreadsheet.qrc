@@ -177,5 +177,7 @@
         <file>Resource/normal/png/24x24/Zoom in.png</file>
         <file>Resource/normal/png/24x24/Zoom out.png</file>
         <file>Resource/normal/png/24x24/Zoom.png</file>
+        <file>Resource/Office-excel.svg</file>
+        <file>Resource/excel256.png</file>
     </qresource>
 </RCC>
