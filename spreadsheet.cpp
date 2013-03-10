@@ -7,10 +7,12 @@ Spreadsheet::Spreadsheet(QWidget *parent) :
 
 }
 QString Spreadsheet::currentLocation() {
-    return "Unwork location!";
+    return tr( "%1%2" )
+            .arg(char( this->currentColumn() + 'A'))
+            .arg(this->currentRow()+1);
 }
 QString Spreadsheet::currentFormula() {
-    return "Unwork formula!";
+    return (this->currentItem() ? this->currentItem()->text() : "");
 }
 bool Spreadsheet::readFile(const QString &filename) {
 }

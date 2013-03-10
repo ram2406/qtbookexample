@@ -65,6 +65,7 @@ void MainWindow::createActions()
             , spreadsheet,SLOT(setShowGrid(bool)));
     this->aboutQtAction = new QAction(tr("About &Qt"), this);
     aboutQtAction->setStatusTip(tr("Show the Qt library's About box"));
+    aboutQtAction->setShortcut(tr("Ctrl+Shift+H"));
     connect(aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 
     this->saveAction = new QAction(tr("&Save"), this);
@@ -121,9 +122,10 @@ void MainWindow::createActions()
     this->autoRecalcAction   = new QAction(tr("&Auto Recalculate"), this);
     this->aboutAction        = new QAction(tr("&About"), this);
     aboutAction->setStatusTip(tr("About of this application..."));
+    aboutAction->setShortcut(tr("Ctrl+H"));
     connect(this->aboutAction, SIGNAL(triggered()), this, SLOT(about()));
 
-    closeAction = new QAction(this);
+    closeAction = new QAction(tr("&Close"), this);
     closeAction->setShortcut(tr("ESC"));
     closeAction->setStatusTip(tr("Close window"));
     connect(closeAction, SIGNAL(triggered()), this, SLOT(close()));
@@ -148,6 +150,7 @@ void MainWindow::createMenues() {
         fileMenu->addAction(recentFileActions[i]);
     }
     fileMenu->addSeparator();
+    fileMenu->addAction(closeAction);
     fileMenu->addAction((exitAction));
 
     //edit menu
