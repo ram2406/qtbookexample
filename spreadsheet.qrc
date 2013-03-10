@@ -179,5 +179,8 @@
         <file>Resource/normal/png/24x24/Zoom.png</file>
         <file>Resource/Office-excel.svg</file>
         <file>Resource/excel256.png</file>
+        <file>Resource/Copy.png</file>
+        <file>Resource/Paste.png</file>
+        <file>Resource/Cut.png</file>
     </qresource>
 </RCC>

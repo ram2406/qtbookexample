@@ -91,15 +91,17 @@ void MainWindow::createActions()
     this->cutAction = new QAction(tr("&Cut"), this);
     cutAction->setStatusTip( tr("Cut") );
     cutAction->setShortcut( tr("Ctrl+X") );
-
+    cutAction->setIcon(QIcon(tr(":/Resource/Cut.png")));
     //connect(cutAction, SIGNAL(triggered()), this, SLOT(cu))
 
     this->pasteAction        = new QAction(tr("&Paste"), this);
     pasteAction->setShortcut(tr("Ctrl+V"));
     pasteAction->setStatusTip(tr("Paste"));
+    pasteAction->setIcon(QIcon(tr(":/Resource/Paste.png")));
     this->copyAction         = new QAction(tr("C&opy"), this);
     copyAction->setShortcut(tr("Ctrl+C"));
     copyAction->setStatusTip(tr("Copy"));
+    copyAction->setIcon(QIcon(tr(":/Resource/Copy.png")));
     this->deleteAction       = new QAction(tr("&Delete"), this);
     deleteAction->setShortcut(tr("Del"));
     deleteAction->setStatusTip(tr("Delete"));
