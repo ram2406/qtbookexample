@@ -28,6 +28,8 @@ MainWindow::MainWindow()
 
     //setAttribute(Qt::WA_DeleteOnClose);
 }
+
+
 void MainWindow::createActions()
 {
     //file menu
@@ -50,7 +52,7 @@ void MainWindow::createActions()
     this->exitAction->setShortcut(tr("Ctrl+Q"));
     exitAction->setIcon(QIcon(tr(":/Resource/normal/png/24x24/Exit.png")));
     this->exitAction->setStatusTip(tr("Exit the application"));
-    connect(this->exitAction,SIGNAL(triggered()),this,SLOT(close()));
+    connect(this->exitAction,SIGNAL(triggered()),qApp,SLOT(closeAllWindows()));
 
     this->selectAllAction = new QAction(tr("&All"),this);
     this->selectAllAction->setShortcut(QKeySequence::SelectAll);
