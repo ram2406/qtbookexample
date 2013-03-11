@@ -3,20 +3,57 @@
 
 #include <QTableWidget>
 
+class Cell;
+class SpreadsheetCompare;
+
 class Spreadsheet : public QTableWidget
 {
     Q_OBJECT
 public:
     explicit Spreadsheet(QWidget *parent = 0);
-    QString currentLocation();
-    QString currentFormula();
+
+    inline bool autoRecalculate() const { return autoRecalc; }
+
+    QString currentLocation() const;
+    QString currentFormula() const;
+    QTableWidgetSelectionRange selectedRange() const;
     bool readFile(const QString &filename);
     bool writeFile(const QString &filename);
+    void sort(const SpreadsheetCompare &compare);
 signals:
     void modeified();
 public slots:
-    void findNext(const QString &, Qt::CaseSensitivity) {}
-    void findPrevios(const QString &, Qt::CaseSensitivity) {}
+    void findNext(const QString &, Qt::CaseSensitivity) ;
+    void findPrevios(const QString &, Qt::CaseSensitivity);
+
+    void cut();
+    void copy();
+    void paste();
+    void del();
+    void selectCurentRow();
+    void selectCurrentColumn();
+    void recalculate();
+    void setAutoRecalculate(bool recalc);
+private slots:
+    void somethingChanged();
+private:
+    enum {MagicNumber = 0x7F51C883 , RowCount = 999, ColumnCount = 26 };
+    Cell *cell(int row, int column) const;
+    QString text(int row, int column) const;
+    QString formula(int row, int column) const;
+    void setFormula(int row, int column, const QString &formula);
+
+    bool autoRecalc;
+};
+
+class SpreadsheetCompare
+{
+public:
+    bool operator()(const QStringList &row1
+                    , const QStringList &row2) const;
+    enum { KeyCount = 3 };
+    int keys[KeyCount];
+    bool askeding[KeyCount];
 };
 
 #endif // SPREADSHEET_H
