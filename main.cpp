@@ -6,12 +6,26 @@
 #include "sortdialog/sortdialog.h"
 
 #include <QSplashScreen>
+#include <QWaitCondition>
+#include <QMutex>
+
+static void msleep(unsigned long msecs)
+    {
+        QMutex mutex;
+        mutex.lock();
+
+        QWaitCondition waitCondition;
+        waitCondition.wait(&mutex, msecs);
+
+        mutex.unlock();
+    }
+
 
 void loadModules() {
-    //int test = 0;     for(int i = 0; i <1000000000; i++) test= (i+1) / 2;
+    msleep(1000);
 }
 void establishConnections() {
-    //for(int i = 0; i <10000000; i++);
+    msleep(1000);
 }
 
 int main(int argc, char *argv[])
@@ -31,10 +45,10 @@ int main(int argc, char *argv[])
 
     MainWindow mainWin;
     splash->showMessage(QObject::tr("Loading modules..."),
-    bottomCenter, Qt::white);
+    bottomCenter, Qt::black);
     loadModules();
     splash->showMessage(QObject::tr("Establishing connections..."),
-    bottomCenter, Qt::white);
+    bottomCenter, Qt::black);
     establishConnections();
     mainWin.show();
     splash->finish(&mainWin);
