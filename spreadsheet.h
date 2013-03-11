@@ -20,6 +20,7 @@ public:
     bool readFile(const QString &filename);
     bool writeFile(const QString &filename);
     void sort(const SpreadsheetCompare &compare);
+    void clear();
 signals:
     void modeified();
 public slots:

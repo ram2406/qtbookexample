@@ -12,8 +12,7 @@ MainWindow::MainWindow()
 
     spreadsheet = new Spreadsheet;
     setCentralWidget(spreadsheet);
-    spreadsheet->setColumnCount(25);
-    spreadsheet->setRowCount(25);
+
     createActions();
     createMenues();
     createContextMenu();
@@ -338,14 +337,15 @@ QString MainWindow::strippedName(const QString &fullFileName){
 
 void MainWindow::newFile(){
 
+    /*
     MainWindow *mainWin = new MainWindow();
     mainWin->setAttribute(Qt::WA_DeleteOnClose);
     mainWin->show();
-
-    /*if(okToContinue()) {
+    */
+    if(okToContinue()) {
         spreadsheet->clear();
         setCurrentFile("");
-    }*/
+    }
 }
 void MainWindow::open(){
     if(okToContinue()) {

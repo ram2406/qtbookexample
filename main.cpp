@@ -22,10 +22,10 @@ static void msleep(unsigned long msecs)
 
 
 void loadModules() {
-    msleep(1000);
+    //msleep(1000);
 }
 void establishConnections() {
-    msleep(1000);
+    //msleep(1000);
 }
 
 int main(int argc, char *argv[])
@@ -54,14 +54,7 @@ int main(int argc, char *argv[])
     splash->finish(&mainWin);
     delete splash;
     return app.exec();
-    /*
-    QApplication a(argc, argv);
 
-    MainWindow w;
-    w.show();
-
-    return a.exec();
-    */
 }
 
 
