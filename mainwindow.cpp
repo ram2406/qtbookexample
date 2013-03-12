@@ -12,7 +12,6 @@ MainWindow::MainWindow()
 
     spreadsheet = new Spreadsheet;
     setCentralWidget(spreadsheet);
-
     createActions();
     createMenues();
     createContextMenu();
