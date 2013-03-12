@@ -5,6 +5,7 @@
 GoToCellDialog::GoToCellDialog(QWidget *parent)
 {
     setupUi(this);
+    setWindowTitle("Go to cell");
     QRegExp regExp("[A-Za-z][1-9][0-9]{0,2}");
     lineEdit->setValidator(new QRegExpValidator(regExp,this));
     connect(okButton,SIGNAL(clicked()),this,SLOT(accept()));

@@ -139,7 +139,30 @@ void Spreadsheet::findPrevios(const QString &str, Qt::CaseSensitivity cs) {
     QApplication::beep();
 }
 
-void Spreadsheet::sort(const SpreadsheetCompare &compare) { }
+void Spreadsheet::sort(const SpreadsheetCompare &compare) {
+    QList<QStringList> rows;
+    QTableWidgetSelectionRange range = selectedRange();
+
+    for (int i=0; i < range.rowCount(); ++i) {
+        QStringList row;
+        for (int j=0; j<range.columnCount(); ++j) {
+            row.append( text(range.topRow()+i, range.leftColumn()+j)
+                        //formula(range.topRow()+i , range.leftColumn()+j)          )
+                       );
+
+        }
+        rows.append(row);
+    }
+    qStableSort(rows.begin(), rows.end(), compare);
+    for (int i = 0; i < range.rowCount(); ++i) {
+        for (int j=0; j < range.columnCount(); ++j) {
+            setFormula(range.topRow()+i, range.leftColumn()+j, rows[i][j]);
+        }
+    }
+    clearSelection();
+    somethingChanged();
+
+}
 
 void Spreadsheet::copy() {
     QTableWidgetSelectionRange range = selectedRange();
@@ -200,8 +223,21 @@ void Spreadsheet::selectCurentRow(){
 void Spreadsheet::selectCurrentColumn(){
     selectColumn(currentColumn());
 }
-void Spreadsheet::recalculate(){}
-void Spreadsheet::setAutoRecalculate(bool recalc){}
+void Spreadsheet::recalculate(){
+    for(int row = 0; row < ColumnCount; ++row) {
+        for(int column = 0; column < RowCount; ++column) {
+            if(Cell *c = cell(row, column))
+                c->setDrity();
+        }
+    }
+    viewport()->update();
+}
+void Spreadsheet::setAutoRecalculate(bool recalc) {
+    autoRecalc = recalc;
+    if(autoRecalc)
+        recalculate();
+}
+
 
 Cell *Spreadsheet::cell(int row, int column) const {
     return static_cast<Cell*> (item(row,column));
@@ -236,4 +272,23 @@ void Spreadsheet::somethingChanged() {
     if(autoRecalc)
         recalculate();
     emit modeified();
+}
+
+
+bool SpreadsheetCompare::operator ()(const QStringList &row1, const QStringList &row2) const
+{
+    for(int i=0; i < KeyCount; ++i) {
+        int column = keys[i];
+        if(column != -1) {
+            if(row1[column] != row2[column]) {
+                if(ascending[i]) {
+                    return row1[column] < row2[column];
+                }
+                else {
+                    return row1[column] > row2[column];
+                }
+            }
+        }
+    }
+    return false;
 }

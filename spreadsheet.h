@@ -54,7 +54,7 @@ public:
                     , const QStringList &row2) const;
     enum { KeyCount = 3 };
     int keys[KeyCount];
-    bool askeding[KeyCount];
+    bool ascending[KeyCount];
 };
 
 #endif // SPREADSHEET_H

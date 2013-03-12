@@ -8,8 +8,9 @@ class Cell : public QTableWidgetItem
 
 public:
     explicit Cell();
-    QString formula() { return "";}
-    void setFormula(const QString& ){}
+    QString formula() { return text();}
+    void setFormula(const QString& s){ this->setText(s);}
+    void setDrity() {}
 signals:
     
 public slots:

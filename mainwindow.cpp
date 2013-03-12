@@ -92,19 +92,22 @@ void MainWindow::createActions()
     cutAction->setStatusTip( tr("Cut") );
     cutAction->setShortcut( tr("Ctrl+X") );
     cutAction->setIcon(QIcon(tr(":/Resource/Cut.png")));
-    //connect(cutAction, SIGNAL(triggered()), this, SLOT(cu))
+    connect(cutAction, SIGNAL(triggered()), spreadsheet, SLOT(cut()));
 
     this->pasteAction        = new QAction(tr("&Paste"), this);
     pasteAction->setShortcut(tr("Ctrl+V"));
     pasteAction->setStatusTip(tr("Paste"));
     pasteAction->setIcon(QIcon(tr(":/Resource/Paste.png")));
+    connect(pasteAction, SIGNAL(triggered()), spreadsheet, SLOT(paste()));
     this->copyAction         = new QAction(tr("C&opy"), this);
     copyAction->setShortcut(tr("Ctrl+C"));
     copyAction->setStatusTip(tr("Copy"));
     copyAction->setIcon(QIcon(tr(":/Resource/Copy.png")));
+    connect(copyAction,SIGNAL(triggered()), spreadsheet, SLOT(copy()));
     this->deleteAction       = new QAction(tr("&Delete"), this);
     deleteAction->setShortcut(tr("Del"));
     deleteAction->setStatusTip(tr("Delete"));
+    connect(deleteAction, SIGNAL(triggered()), spreadsheet, SLOT(del()));
     this->selectColumnAction = new QAction(tr("Select Column"), this);
     this->selectRowAction    = new QAction(tr("Select Row"), this);
     this->findAction         = new QAction(tr("Find"), this);
@@ -350,8 +353,8 @@ void MainWindow::open(){
     if(okToContinue()) {
         QString fileName = QFileDialog::getOpenFileName(this
                                         , tr("Open Spreadsheet"), "."
-                                        , tr("Spreadsheet files (*.sp)\n"
-                                             "Comma-separated values files (*.csv)\n"
+                                        , tr("Spreadsheet files (*.sp);;"
+                                             "Comma-separated values files (*.csv);;"
                                              "Lotus 1-2-3 files (*.wk1, *.wks)"));
         if(!fileName.isEmpty())
             loadFile(fileName);
@@ -366,6 +369,7 @@ bool MainWindow::save(){
 bool MainWindow::saveAs(){
     QString fileName = QFileDialog::getSaveFileName(this
                                    , tr("Save Spreadsheet")
+                                                    , tr(".")
                                    , tr("Spreadsheet files (*.sp)"));
     if(fileName.isEmpty())
         return false;
@@ -398,22 +402,23 @@ void MainWindow::sort() {
     dialog.setColumnRange('A' + range.leftColumn(),   'A' + range.rightColumn());
 
     if (dialog.exec()) {
-        /*
+
         SpreadsheetCompare compare;
         compare.keys[0] =
-        dialog.primaryColumnCombo->currentIndex();
+            dialog.primaryColumnCombo->currentIndex();
         compare.keys[1] =
-        dialog.secondaryColumnCombo->currentIndex() - 1;
+            dialog.secondaryColumnCombo->currentIndex() - 1;
         compare.keys[2] =
-        dialog.tertiaryColumnCombo->currentIndex() - 1;
+            dialog.tretiaryColumnCombo->currentIndex() - 1;
         compare.ascending[0] =
-        (dialog.primaryOrderCombo->currentIndex() == 0);
+            (dialog.primaryOrderCombo->currentIndex() == 0);
         compare.ascending[1] =
-        (dialog.secondaryOrderCombo->currentIndex() == 0);
+            (dialog.secondaryOrderCombo->currentIndex() == 0);
         compare.ascending[2] =
-        (dialog.tertiaryOrderCombo->currentIndex() == 0);
+            (dialog.tretiaryOrderCombo->currentIndex() == 0);
+
         spreadsheet->sort(compare);
-        */
+
     }
 }
 void MainWindow::about(){
