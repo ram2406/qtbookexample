@@ -108,8 +108,10 @@ void MainWindow::createActions()
     deleteAction->setShortcut(tr("Del"));
     deleteAction->setStatusTip(tr("Delete"));
     connect(deleteAction, SIGNAL(triggered()), spreadsheet, SLOT(del()));
-    this->selectColumnAction = new QAction(tr("Select Column"), this);
-    this->selectRowAction    = new QAction(tr("Select Row"), this);
+    this->selectColumnAction = new QAction(tr("Column"), this);
+    connect(selectColumnAction, SIGNAL(triggered()), spreadsheet, SLOT(selectCurrentColumn()));
+    this->selectRowAction    = new QAction(tr("Row"), this);
+    connect(selectRowAction, SIGNAL(triggered()), spreadsheet, SLOT(selectCurentRow()));
     this->findAction         = new QAction(tr("Find"), this);
     findAction->setStatusTip( tr("Find a text..."));
     findAction->setShortcut( tr("Ctrl+F"));
@@ -121,10 +123,19 @@ void MainWindow::createActions()
     goToCellAction->setIcon(QIcon(tr(":/Resource/normal/png/24x24/Right.png")));
     connect(goToCellAction, SIGNAL(triggered()), this, SLOT(goToCell()));
     this->recalculateAction  = new QAction(tr("&Recalculate"), this);
+    recalculateAction->setShortcut(tr("Ctrl+R"));
+    recalculateAction->setStatusTip("Recalculate values of cells");
+    connect(recalculateAction, SIGNAL(triggered()),spreadsheet, SLOT(recalculate()));
     this->sortAction         = new QAction(tr("&Sort"), this);
+    sortAction->setShortcut(tr("Ctrl+M,S"));
     sortAction->setStatusTip(tr("Set sort rule..."));
     connect(sortAction, SIGNAL(triggered()), this, SLOT(sort()));
     this->autoRecalcAction   = new QAction(tr("&Auto Recalculate"), this);
+    autoRecalcAction->setShortcut(tr("Ctrl++Shift+R"));
+    autoRecalcAction->setStatusTip("Set auto recalculation cells");
+    autoRecalcAction->setCheckable(true);
+    autoRecalcAction->setChecked(spreadsheet->autoRecalculate());
+    connect(autoRecalcAction, SIGNAL(toggled(bool)), spreadsheet , SLOT(setAutoRecalculate(bool)));
     this->aboutAction        = new QAction(tr("&About"), this);
     aboutAction->setStatusTip(tr("About of this application..."));
     aboutAction->setShortcut(tr("Ctrl+H"));
@@ -155,7 +166,7 @@ void MainWindow::createMenues() {
         fileMenu->addAction(recentFileActions[i]);
     }
     fileMenu->addSeparator();
-    fileMenu->addAction(closeAction);
+    //fileMenu->addAction(closeAction);
     fileMenu->addAction((exitAction));
 
     //edit menu
