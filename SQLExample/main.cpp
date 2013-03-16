@@ -52,11 +52,12 @@ void ConnectionOpen();
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    //if (!createConnection()) return 1;
-    ConnectionOpen();
-     TableEditor editor("Album");
-    editor.show();
-    return editor.exec();
+    if (!createConnection()) return 1;
+    //ConnectionOpen();
+     TableEditor *editor =new TableEditor("person");
+    editor->show();
+    return app.exec();
+
 }
 
 static bool createConnection()
@@ -135,7 +136,7 @@ static bool createConnection()
 
 void ConnectionOpen()
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
     db.setHostName("178.132.203.229");
     db.setDatabaseName("trespassers");
     db.setUserName("trespassers");
