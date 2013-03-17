@@ -24,6 +24,16 @@
      </rect>
     </property>
    </widget>
+   <widget class="IconEditor" name="iconeditor">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>40</y>
+      <width>261</width>
+      <height>181</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -47,6 +57,11 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
+  <customwidget>
+   <class>IconEditor</class>
+   <extends>QWidget</extends>
+   <header>iconeditor.h</header>
+  </customwidget>
   <customwidget>
    <class>HexSpinBox</class>
    <extends>QSpinBox</extends>
