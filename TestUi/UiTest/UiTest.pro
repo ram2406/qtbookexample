@@ -15,10 +15,15 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     hexspinbox.cpp \
-    iconeditor.cpp
+    iconeditor.cpp \
+    plotter.cpp
 
 HEADERS  += mainwindow.h \
     hexspinbox.h \
-    iconeditor.h
+    iconeditor.h \
+    plotter.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    plotter.qrc
