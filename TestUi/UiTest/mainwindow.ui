@@ -14,25 +14,44 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="HexSpinBox" name="spinBox">
+   <widget class="QToolBox" name="toolBox">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>281</width>
-      <height>23</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="IconEditor" name="iconeditor">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
+      <x>70</x>
       <y>40</y>
-      <width>261</width>
-      <height>181</height>
+      <width>82</width>
+      <height>136</height>
      </rect>
     </property>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <widget class="QWidget" name="page">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>72</width>
+       <height>72</height>
+      </rect>
+     </property>
+     <attribute name="label">
+      <string>Page 1</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="page_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>72</width>
+       <height>72</height>
+      </rect>
+     </property>
+     <attribute name="label">
+      <string>Page 2</string>
+     </attribute>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -44,6 +63,14 @@
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Файл</string>
+    </property>
+    <addaction name="loadAction"/>
+    <addaction name="exitAction"/>
+   </widget>
+   <addaction name="menu"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -54,20 +81,27 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="loadAction">
+   <property name="text">
+    <string>Загрузить</string>
+   </property>
+   <property name="toolTip">
+    <string>Загрузить файл содержащий сигналы </string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="exitAction">
+   <property name="text">
+    <string>Выход</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>IconEditor</class>
-   <extends>QWidget</extends>
-   <header>iconeditor.h</header>
-  </customwidget>
-  <customwidget>
-   <class>HexSpinBox</class>
-   <extends>QSpinBox</extends>
-   <header>hexspinbox.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

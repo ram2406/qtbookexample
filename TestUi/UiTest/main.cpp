@@ -2,13 +2,23 @@
 #include "mainwindow.h"
 #include "hexspinbox.h"
 #include "plotter.h"
+#include <QMenuBar>
+#include <QToolBar>
+
+
+
+
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    //MainWindow w;
     QMainWindow win;
+
+
+
+
+
     Plotter *p = new Plotter(&win);
     for(int i = 0; i < 6; i++) {
         QVector<QPointF> data(20);

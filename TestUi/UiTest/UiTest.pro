@@ -16,12 +16,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     hexspinbox.cpp \
     iconeditor.cpp \
-    plotter.cpp
+    plotter.cpp \
+    DEMP/Dempher.cpp
 
 HEADERS  += mainwindow.h \
     hexspinbox.h \
     iconeditor.h \
-    plotter.h
+    plotter.h \
+    DEMP/dempher.h
 
 FORMS    += mainwindow.ui
 
