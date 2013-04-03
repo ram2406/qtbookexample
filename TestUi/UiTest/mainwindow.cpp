@@ -7,6 +7,7 @@
 #include <QStatusBar>
 #include <QList>
 #include <QHeaderView>
+#include <cmath>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -23,11 +24,28 @@ void MainWindow::createCentralWidget()
 {
     Plotter *pl = new Plotter(this);
 
+    QVector<QPointF> data(200);
+    for (int var = 0; var < data.count(); ++var) {
+        data[var] = QPointF(var, var / 2 ) ;
+    }
+
+    pl->setCurveData(1,data);
+
     QTableWidget *table = new QTableWidget(this);
     table->setColumnCount(1);
     table->setColumnWidth(0, 200);
     table->setRowCount(2000);
     table->verticalHeader()->setMaximumWidth(36);
+
+    for (int var = 0; var < data.count(); ++var) {
+        QTableWidgetItem *item = new QTableWidgetItem;
+
+        QString str;
+        str += QString::number( data[var].x() ) + " " + QString::number( data[var].y() );
+
+        item->setText(str);
+        table->setItem(var , 0 ,item);
+    }
 
     QTableWidgetItem *header = new QTableWidgetItem;
     header->setTextAlignment(Qt::AlignLeft);
