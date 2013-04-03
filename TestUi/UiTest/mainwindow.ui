@@ -13,47 +13,7 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralWidget">
-   <widget class="QToolBox" name="toolBox">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>40</y>
-      <width>82</width>
-      <height>136</height>
-     </rect>
-    </property>
-    <property name="currentIndex">
-     <number>1</number>
-    </property>
-    <widget class="QWidget" name="page">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>72</width>
-       <height>72</height>
-      </rect>
-     </property>
-     <attribute name="label">
-      <string>Page 1</string>
-     </attribute>
-    </widget>
-    <widget class="QWidget" name="page_2">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>72</width>
-       <height>72</height>
-      </rect>
-     </property>
-     <attribute name="label">
-      <string>Page 2</string>
-     </attribute>
-    </widget>
-   </widget>
-  </widget>
+  <widget class="QWidget" name="centralWidget"/>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
@@ -67,8 +27,6 @@
     <property name="title">
      <string>Файл</string>
     </property>
-    <addaction name="loadAction"/>
-    <addaction name="exitAction"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -81,25 +39,6 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="loadAction">
-   <property name="text">
-    <string>Загрузить</string>
-   </property>
-   <property name="toolTip">
-    <string>Загрузить файл содержащий сигналы </string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+O</string>
-   </property>
-  </action>
-  <action name="exitAction">
-   <property name="text">
-    <string>Выход</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Q</string>
-   </property>
-  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

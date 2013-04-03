@@ -1,10 +1,10 @@
 
-#include <stdio.h>
-
-#include <string.h>
-#include <stdlib.h>
-#include <math.h>
+#include <cstdlib>
+#include <cmath>
+#include <cstring>
 #include "dempher.h"
+
+
 
 DempherClass::DempherClass() {
     cadr.reserve(NCADR);
@@ -27,14 +27,14 @@ void DempherClass::GetConfig(void)
 
   nParam = 0;
   while(nParam < 2 && fgets(str, 80, fconfig))
-  { if( (pStr = strstr(str, "dF1=") ) )
-    { config.dF1 = atof(pStr + strlen("dF1="));
+  { if( (pStr = std::strstr(str, "dF1=") ) )
+    { config.dF1 = std::atof(pStr + std::strlen("dF1="));
       printf("dF1=%06.1lf\n", config.dF1);
       nParam++;
     }
 
     if( ( pStr = strstr(str, "dF2=") ) )
-    { config.dF2 = atof(pStr + strlen("dF2="));
+    { config.dF2 = std::atof(pStr + std::strlen("dF2="));
       printf("dF2=%06.1lf\n", config.dF2);
       nParam++;
     }
@@ -108,6 +108,8 @@ result_code DempherClass::GetCadr(FILE * fin)
     CADR lastCadr = {0 , 0 , 0 , 0 , 0.0};
     cadr.push_back(lastCadr);
     nCadr++;
+
+    return SUCCESS;
 }
 
 void DempherClass::PutCadr(int step)
@@ -273,12 +275,14 @@ result_code DempherClass::Dempher(FILE * fin, FILE * fout)
 
     if(inByte != 15)
     {
-        printf(getTextResCode(ERROR_08), iCadr + 1);
+        printf(getTextResCode(ERROR_08).c_str(), iCadr + 1);
         return ERROR_08;
     }   //if(inByte != 15)
 
     fputc(inByte, fout);
   }     //for(iCadr = 1; iCadr < nCadr - 1; iCadr++)
+
+  return SUCCESS;
 }
 
 result_code DempherClass::exec(std::string filenameIn, std::string filenameOut, bool step , CONFIG &conf)
@@ -307,7 +311,10 @@ result_code DempherClass::exec(std::string filenameIn, std::string filenameOut, 
     PutCadr(step);
     Dempher(fin, fout);
 
-    fcloseall();
+    fclose(fin);
+    fclose(fout);
+
+    //fcloseall();
 
     printf("SUCCESS!");
     return SUCCESS;

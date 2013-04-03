@@ -1,6 +1,8 @@
 #ifndef DEMPHER_H
 #define DEMPHER_H
 
+#include <cstdio>
+
 #include <string>
 #include <vector>
 /*
@@ -10,10 +12,6 @@
 */
 
 
-
-#ifndef _STDIO_H
-struct FILE;
-#endif
 
 enum result_code {
  SUCCESS  = 0,

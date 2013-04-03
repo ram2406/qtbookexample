@@ -2,21 +2,33 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
-namespace Ui {
-class MainWindow;
-}
+#include <QAction>
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    
 public:
     explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    
+signals:
+    
+public slots:
     
 private:
-    Ui::MainWindow *ui;
+    void createCentralWidget();
+
+    void createActions();
+    void createMenues();
+    //void createContextMenu();
+    void createToolBars();
+    void createStatusBar();
+
+    QAction *openFileAction;
+    QAction *closeAction;
+    QAction *saveFileAction;
+    QAction *aboutAction;
+
+
 };
 
 #endif // MAINWINDOW_H

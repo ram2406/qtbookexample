@@ -1,17 +1,14 @@
 #include <QApplication>
 #include "mainwindow.h"
-#include "hexspinbox.h"
+
 #include "plotter.h"
 #include <QMenuBar>
 #include <QToolBar>
+#include "examples/findfiledialog.h"
 
 
+void graph() {
 
-
-
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
 
     QMainWindow win;
 
@@ -22,7 +19,7 @@ int main(int argc, char *argv[])
     Plotter *p = new Plotter(&win);
     for(int i = 0; i < 6; i++) {
         QVector<QPointF> data(20);
-        int x = random() , y = random();
+        int x = rand() , y = rand();
         for (int var = 0; var < data.size(); ++var) {
             data[var].setX(x * var);
             data[var].setY(y * var);
@@ -35,15 +32,31 @@ int main(int argc, char *argv[])
 
 
     win.setCentralWidget(p);
-    //HexSpinBox *h = new HexSpinBox(0);
-    //h->show();
-    //w.setCentralWidget(h);
-    //w.sizeHint();
 
     win.show();
 
+
+}
+
+void mainWindow() {
+    MainWindow *w = new MainWindow;
+    w->show();
+}
+
+int findFileDialog() {
+
+    FindFileDialog fd;
+
+
+    return fd.exec();
+}
+
+
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    //return findFileDialog();
+    mainWindow();
     return a.exec();
-    //03/16/13
-    //03/17/13 page 122
 }
 

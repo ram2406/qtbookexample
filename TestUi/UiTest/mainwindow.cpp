@@ -1,14 +1,86 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include <QTableWidget>
+#include "plotter.h"
+#include <QMenuBar>
+#include <QToolBar>
+#include <QSplitter>
+#include <QStatusBar>
+#include <QList>
+#include <QHeaderView>
+
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    QMainWindow(parent)
 {
-    ui->setupUi(this);
+    createActions();
+    createMenues();
+    createToolBars();
+    createCentralWidget();
+    createStatusBar();
 }
 
-MainWindow::~MainWindow()
+void MainWindow::createCentralWidget()
 {
-    delete ui;
+    Plotter *pl = new Plotter(this);
+
+    QTableWidget *table = new QTableWidget(this);
+    table->setColumnCount(1);
+    table->setColumnWidth(0, 200);
+    table->setRowCount(2000);
+    table->verticalHeader()->setMaximumWidth(36);
+
+    QTableWidgetItem *header = new QTableWidgetItem;
+    header->setTextAlignment(Qt::AlignLeft);
+    header->setText(tr("Кадры"));
+    table->setHorizontalHeaderItem(0, header);
+
+    QSplitter *s = new QSplitter(Qt::Horizontal);
+    s->addWidget(table);
+    s->addWidget(pl);
+    QList<int> sizes;
+    sizes.append(125);
+    sizes.append(475);
+
+    s->setSizes(sizes);
+
+    this->setCentralWidget(s);
+
+
+}
+
+void MainWindow::createActions()
+{
+    openFileAction = new QAction(tr("&Открыть"), this);
+    openFileAction->setShortcut(tr("Ctrl+O"));
+    openFileAction->setStatusTip(tr("Открыть файл содержащий сигналы управляющей программы"));
+
+    saveFileAction = new QAction(tr("&Сохранить"), this);
+    saveFileAction->setShortcut(tr("Ctrl+S"));
+    saveFileAction->setStatusTip(tr("Сохранить в файл управляющих сигналов после демп"));
+
+    closeAction = new QAction(tr("&Закрыть"), this);
+    closeAction->setShortcut(tr("Ctrl+Q"));
+    closeAction->setStatusTip(tr("Закрыть приложение"));
+}
+
+
+void MainWindow::createMenues()
+{
+    QMenu *fileMenu = this->menuBar()->addMenu(tr("&Файл"));
+    fileMenu->addAction(openFileAction);
+    fileMenu->addAction(closeAction);
+    fileMenu->addAction(saveFileAction);
+}
+
+void MainWindow::createToolBars()
+{
+    QToolBar *toolb = this->addToolBar(tr("&Файл"));
+    toolb->addAction(openFileAction);
+    toolb->addAction(closeAction);
+    toolb->addAction(saveFileAction);
+}
+
+void MainWindow::createStatusBar()
+{
+    this->statusBar()->show();
 }

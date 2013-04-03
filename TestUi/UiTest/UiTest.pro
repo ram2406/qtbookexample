@@ -13,19 +13,23 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-    hexspinbox.cpp \
-    iconeditor.cpp \
     plotter.cpp \
-    DEMP/Dempher.cpp
+    DEMP/Dempher.cpp \
+    examples/iconeditor.cpp \
+    examples/hexspinbox.cpp \
+    examples/findfiledialog.cpp \
+    mainwindow.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += \
     hexspinbox.h \
-    iconeditor.h \
     plotter.h \
-    DEMP/dempher.h
+    DEMP/dempher.h \
+    examples/iconeditor.h \
+    examples/hexspinbox.h \
+    examples/findfiledialog.h \
+    mainwindow.h
 
-FORMS    += mainwindow.ui
+FORMS    +=
 
 RESOURCES += \
     plotter.qrc
