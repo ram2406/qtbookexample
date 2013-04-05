@@ -13,29 +13,40 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
+    this->setWindowTitle(tr("Программа демпфирования"));
+    this->setWindowIcon(QIcon(tr(":/images/main.PNG")));
     createActions();
-    createMenues();
+    //createMenues();
     createToolBars();
     createCentralWidget();
     createStatusBar();
+
 }
 
 void MainWindow::createCentralWidget()
 {
     Plotter *pl = new Plotter(this);
 
-    QVector<QPointF> data(200);
+    QVector<QPointF> data(2000);
     for (int var = 0; var < data.count(); ++var) {
         data[var] = QPointF(var, var / 2 ) ;
     }
 
     pl->setCurveData(1,data);
 
+    //QVector<QPointF> data(200);
+    for (int var = 0; var < data.count(); ++var) {
+        data[var] = QPointF(var ,std::sin(var*rand())+ 10  ) ;
+    }
+
+    pl->setCurveData(2,data);
+
+
     QTableWidget *table = new QTableWidget(this);
     table->setColumnCount(1);
-    table->setColumnWidth(0, 200);
     table->setRowCount(2000);
     table->verticalHeader()->setMaximumWidth(36);
+    table->horizontalHeader()->setStretchLastSection(true);
 
     for (int var = 0; var < data.count(); ++var) {
         QTableWidgetItem *item = new QTableWidgetItem;
@@ -94,11 +105,21 @@ void MainWindow::createToolBars()
 {
     QToolBar *toolb = this->addToolBar(tr("&Файл"));
     toolb->addAction(openFileAction);
-    toolb->addAction(closeAction);
+
     toolb->addAction(saveFileAction);
+
+    toolb->addAction(closeAction);
 }
 
 void MainWindow::createStatusBar()
 {
     this->statusBar()->show();
+}
+
+void MainWindow::openFile()
+{
+}
+
+void MainWindow::saveFile()
+{
 }

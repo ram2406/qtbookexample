@@ -139,7 +139,6 @@ result_code DempherClass::Dempher(FILE * fin, FILE * fout)
   double F;
   double lF;
   int    inByte;
-  //int    outByte;
   int    sign;
 
   fseek(fin, 0L, SEEK_SET);

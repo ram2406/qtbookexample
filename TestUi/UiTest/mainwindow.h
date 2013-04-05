@@ -29,6 +29,11 @@ private:
     QAction *aboutAction;
 
 
+private slots:
+    void openFile();
+    void saveFile();
+
+
 };
 
 #endif // MAINWINDOW_H

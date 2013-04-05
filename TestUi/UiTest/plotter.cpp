@@ -235,7 +235,7 @@ void Plotter::drawGrid(QPainter *painter)
     for (int ti = 0; ti < settings.numXTicks; ++ti) {
         int x  = rect.left() + (ti *(rect.width() - 1)
                                / settings.numXTicks);
-        double label = settings.minX + (ti + settings.spanX()
+        double label = settings.minX + (ti * settings.spanX()
                                         / settings.numXTicks);
         painter->setPen(quiteDark);
         painter->drawLine(x, rect.top(), x, rect.bottom());
@@ -244,6 +244,7 @@ void Plotter::drawGrid(QPainter *painter)
         painter->drawText(x - 50, rect.bottom() + 5, 100, 20
                           , Qt::AlignCenter | Qt::AlignTop
                           , QString::number(label));
+
 
     }
     for (int ti = 0; ti < settings.numYTicks; ++ti) {
@@ -291,7 +292,22 @@ void Plotter::drawCurves(QPainter *painter)
             double y = rect.bottom() - (dy * (rect.height() -1)
                                         /settings.spanY());
             polyline[j] = QPointF(x,y);
+
+            if(false) { //show points
+
+                QPen pen(colorForIds[uint(id) % 6]);
+                QBrush brush(pen.color());
+                //pen.setWidth(10);
+
+                painter->setPen(pen);
+
+                painter->setBrush(brush);
+                painter->setOpacity(0.6);
+                painter->drawEllipse(x-2,y - 2, 4,4);
+            }
+
         }
+        painter->setOpacity(1);
         painter->setPen(colorForIds[uint(id) % 6]);
         painter->drawPolyline(polyline);
     }
@@ -301,11 +317,11 @@ void Plotter::drawCurves(QPainter *painter)
 PlotSettings::PlotSettings()
 {
     minX = 0.0;
-    maxX = 10.0;
+    maxX = 2000.0;
     numXTicks = 5;
 
     minY = 0.0;
-    maxY = 10.0;
+    maxY = 2000.0;
     numYTicks = 5;
 }
 
