@@ -8,7 +8,8 @@
 #include <QList>
 #include <QHeaderView>
 #include <cmath>
-
+#include <QFileDialog>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -82,6 +83,7 @@ void MainWindow::createActions()
     openFileAction = new QAction(tr("&Открыть"), this);
     openFileAction->setShortcut(tr("Ctrl+O"));
     openFileAction->setStatusTip(tr("Открыть файл содержащий сигналы управляющей программы"));
+    connect(openFileAction, SIGNAL(triggered()), this, SLOT(openFile()));
 
     saveFileAction = new QAction(tr("&Сохранить"), this);
     saveFileAction->setShortcut(tr("Ctrl+S"));
@@ -116,8 +118,28 @@ void MainWindow::createStatusBar()
     this->statusBar()->show();
 }
 
+#include <cstdio>
+#include "DEMP/dempher.h"
+#include "openfilefordemp.h"
+
 void MainWindow::openFile()
 {
+
+    OpenFileForDemp o(this);
+    o.exec();
+
+    /*QFileDialog dlg;
+    dlg.show();*/
+    /*DempherClass dc;
+
+    CONFIG conf= {1000 , 2000};
+
+    result_code res = dc.exec("C:\\data\\gcode\\10777007.PL1" , "C:\\data\\gcode\\10777007.PL2", false, conf);
+
+    if(res != SUCCESS) {
+        QMessageBox::warning(this , tr("Ошибка"), tr( getTextResCode(res).c_str() ), QMessageBox::Ok , QMessageBox::Cancel);
+    }
+    */
 }
 
 void MainWindow::saveFile()

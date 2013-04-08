@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     examples/iconeditor.cpp \
     examples/hexspinbox.cpp \
     examples/findfiledialog.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    openfilefordemp.cpp
 
 HEADERS  += \
     hexspinbox.h \
@@ -27,7 +28,8 @@ HEADERS  += \
     examples/iconeditor.h \
     examples/hexspinbox.h \
     examples/findfiledialog.h \
-    mainwindow.h
+    mainwindow.h \
+    openfilefordemp.h
 
 FORMS    +=
 

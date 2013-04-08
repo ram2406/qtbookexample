@@ -42,7 +42,7 @@ inline std::string getTextResCode(result_code code) {
     }
 }
 
-unsigned short NCADR = 2000;  //количество заранее зарезервированных
+
 
 
 struct CONFIG
@@ -85,6 +85,7 @@ private:
 
     result_code Dempher(FILE * fin, FILE * fout);   //демпфирование
 
+    static unsigned short NCADR;  //количество заранее зарезервированных
 
 };
 

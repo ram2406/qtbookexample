@@ -4,7 +4,7 @@
 #include <cstring>
 #include "dempher.h"
 
-
+unsigned short DempherClass::NCADR = 2000;
 
 DempherClass::DempherClass() {
     cadr.reserve(NCADR);
@@ -107,7 +107,7 @@ result_code DempherClass::GetCadr(FILE * fin)
     }
     CADR lastCadr = {0 , 0 , 0 , 0 , 0.0};
     cadr.push_back(lastCadr);
-    nCadr++;
+    nCadr = cadr.size();
 
     return SUCCESS;
 }
