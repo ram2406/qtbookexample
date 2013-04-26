@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/settings.png</file>
+        <file>images/showNode.png</file>
+        <file>images/showX.png</file>
+        <file>images/showY.png</file>
+        <file>images/showZ.png</file>
+        <file>images/start.png</file>
+        <file>images/help.png</file>
+        <file>images/fastmode.png</file>
+    </qresource>
+</RCC>

@@ -3,6 +3,10 @@
 
 #include <QMainWindow>
 #include <QAction>
+#include "plotter.h"
+#include "ProgSettings.h"
+
+class QTableWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -13,8 +17,21 @@ public:
 signals:
     
 public slots:
-    
+    void loadCLDATA();
+    void interpolExec();
+    void loadGraph(std::string dempFileName);
+    void help();
+
+    void setDrawNode(bool value);
+    void setShowNodeX(bool value);
+    void setShowNodeY(bool value);
+    void setShowNodeZ(bool value);
+
+    void exec();
+
 private:
+    void closeEvent(QCloseEvent *);
+
     void createCentralWidget();
 
     void createActions();
@@ -23,10 +40,31 @@ private:
     void createToolBars();
     void createStatusBar();
 
-    QAction *openFileAction;
+    QAction *settingsAction;
     QAction *closeAction;
-    QAction *saveFileAction;
-    QAction *aboutAction;
+
+
+    QAction *helpAction;
+
+
+    QAction *drawXAction;
+    QAction *drawYAction;
+    QAction *drawZAction;
+
+    QAction *fastModeAction;
+    QAction *drawNodeAction;
+
+    QAction *startAction;
+
+    QTableWidget *table;
+    Plotter *pl;
+
+    bool showX, showY , showZ , showNode;
+
+    ProgSettings settings;
+
+    QToolBar *mainToolBar;
+    QToolBar *graphToolBar;
 
 
 private slots:

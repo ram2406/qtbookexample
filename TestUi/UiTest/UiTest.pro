@@ -6,11 +6,9 @@
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
-TARGET = UiTest
+TARGET = ModelPostproc
 TEMPLATE = app
-
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 SOURCES += main.cpp\
     plotter.cpp \
@@ -19,19 +17,23 @@ SOURCES += main.cpp\
     examples/hexspinbox.cpp \
     examples/findfiledialog.cpp \
     mainwindow.cpp \
-    openfilefordemp.cpp
+    openfilefordemp.cpp \
+    inter/INTERPOL.CPP
+
 
 HEADERS  += \
-    hexspinbox.h \
     plotter.h \
     DEMP/dempher.h \
     examples/iconeditor.h \
     examples/hexspinbox.h \
     examples/findfiledialog.h \
     mainwindow.h \
-    openfilefordemp.h
+    openfilefordemp.h \
+    inter/INTERPOL.h \
+    ProgSettings.h
 
 FORMS    +=
 
 RESOURCES += \
-    plotter.qrc
+    plotter.qrc \
+    main.qrc

@@ -5,11 +5,12 @@
 #include <QMouseEvent>
 #include <cmath>
 #include <QMapIterator>
+#include <QDebug>
 
 Plotter::Plotter(QWidget *parent) :
-    QWidget(parent)
+    QWidget(parent), drawNode(false), fastMode(false)
 {
-
+    title = tr("График движения фрезы");
     setBackgroundRole(QPalette::Dark);
     setAutoFillBackground(true);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -42,6 +43,7 @@ void Plotter::setPlotSettings(const PlotSettings &settings)
 void Plotter::setCurveData(int id, const QVector<QPointF> &data)
 {
     curveMap[id] = data;
+
     refreshPixmap();
 }
 
@@ -59,6 +61,29 @@ QSize Plotter::minimumSizeHint() const
 QSize Plotter::sizeHint() const
 {
     return QSize(12* Margin, 8* Margin);
+}
+
+void Plotter::setTitle(const QString &title)
+{
+    this->title = title;
+}
+
+void Plotter::setVisibleCurve(int id, bool value)
+{
+    curveMapVisible[id] = value;
+    refreshPixmap();
+}
+
+void Plotter::setDrawNode( bool value)
+{
+    drawNode = value;
+    refreshPixmap();
+}
+
+void Plotter::setFastMode(bool value)
+{
+    this->fastMode = value;
+    refreshPixmap();
 }
 
 void Plotter::zoomIn()
@@ -216,8 +241,10 @@ void Plotter::refreshPixmap()
     pixmap = QPixmap(size());
     pixmap.fill(Qt::darkGray);
     QPainter painter(&pixmap);
+
     painter.initFrom(this);
     drawGrid(&painter);
+    drawTitle(&painter);
     drawCurves(&painter);
     update();
 }
@@ -281,8 +308,13 @@ void Plotter::drawCurves(QPainter *painter)
     while(i.hasNext()) {
         i.next();
         int id =i.key();
+
+        if(!curveMapVisible[id])
+            continue;
+
         QVector<QPointF> data = i.value();
-        QPolygonF polyline(data.count());
+        QPolygonF polyline;
+        polyline.reserve(data.count());
 
         for(int j = 0; j < data.count(); ++j) {
             double dx = data[j].x() - settings.minX;
@@ -290,10 +322,14 @@ void Plotter::drawCurves(QPainter *painter)
             double x = rect.left() + (dx *(rect.width() - 1)
                                       / settings.spanX());
             double y = rect.bottom() - (dy * (rect.height() -1)
-                                        /settings.spanY());
-            polyline[j] = QPointF(x,y);
+                                      /settings.spanY());
 
-            if(false) { //show points
+            bool ignorePoint = !rect.contains(x,y);
+
+            if(fastMode && ignorePoint)  continue;
+            polyline.append(QPointF(x,y));
+
+            if(drawNode && !ignorePoint) { //show points
 
                 QPen pen(colorForIds[uint(id) % 6]);
                 QBrush brush(pen.color());
@@ -302,8 +338,9 @@ void Plotter::drawCurves(QPainter *painter)
                 painter->setPen(pen);
 
                 painter->setBrush(brush);
-                painter->setOpacity(0.6);
-                painter->drawEllipse(x-2,y - 2, 4,4);
+                //painter->setOpacity(0.6);
+                painter->drawEllipse(QPointF(x,y), 2,2);
+
             }
 
         }
@@ -311,6 +348,14 @@ void Plotter::drawCurves(QPainter *painter)
         painter->setPen(colorForIds[uint(id) % 6]);
         painter->drawPolyline(polyline);
     }
+}
+
+void Plotter::drawTitle(QPainter *painter)
+{
+    QPen quiteDark = palette().dark().color().light();
+    qDebug() << title;
+    painter->setPen(quiteDark);
+    painter->drawText(QPoint(Margin ,Margin -15)  , title);
 }
 
 

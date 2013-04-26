@@ -20,10 +20,14 @@ public:
     void clearCurve(int id);
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
+    void setTitle(const QString& title);
+    void setVisibleCurve(int id, bool value);
+    void setDrawNode(bool value);
 
 public slots:
     void zoomIn();
     void zoomOut();
+    void setFastMode(bool value);
 
 protected:
     void paintEvent(QPaintEvent *e);
@@ -40,16 +44,21 @@ private:
     void drawGrid(QPainter *painter);
     void drawCurves(QPainter *painter);
 
+    QString title;
 
+    void drawTitle(QPainter* painter);
 
     QToolButton *zoomInButton;
     QToolButton *zoomOutButton;
     QMap<int, QVector<QPointF> > curveMap;
+    QMap<int, bool > curveMapVisible;
     QVector<PlotSettings> zoomStack;
     int curZoom;
     bool rubberBandIsShown;
     QRect rubberBandRect;
     QPixmap pixmap;
+
+    bool drawNode, fastMode;
 
     enum { Margin = 50 };
 
