@@ -69,7 +69,7 @@ struct CADR
 
 class DempherClass {
 public:
-    result_code exec(std::string filenameIn, std::string filenameOut, bool step , CONFIG &conf);
+    result_code exec(std::wstring filenameIn, std::wstring filenameOut, bool step , CONFIG &conf);
 
     DempherClass();
 private:

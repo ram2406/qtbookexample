@@ -6,9 +6,14 @@
 #include <cmath>
 #include <QMapIterator>
 #include <QDebug>
+#include <QTimer>
 
-Plotter::Plotter(QWidget *parent) :
-    QWidget(parent), drawNode(false), fastMode(false)
+
+
+
+Plotter::Plotter(QWidget *parent)
+    : QWidget(parent), drawNode(false), fastMode(false)
+    , timer(new QTimer(this)) , timerEnable(true)
 {
     title = tr("График движения фрезы");
     setBackgroundRole(QPalette::Dark);
@@ -28,7 +33,12 @@ Plotter::Plotter(QWidget *parent) :
     connect(zoomOutButton, SIGNAL(clicked()), this, SLOT(zoomOut()));
 
     setPlotSettings(PlotSettings());
+
+    connect(timer, SIGNAL(timeout()) , this , SLOT(timerEnd()));
+
 }
+
+
 
 void Plotter::setPlotSettings(const PlotSettings &settings)
 {
@@ -236,17 +246,27 @@ void Plotter::updateRubberBandRegion()
     update(rect.right(), rect.top(), 1, rect.height());
 }
 
-void Plotter::refreshPixmap()
+void Plotter::refreshPixmap(bool force)
 {
     pixmap = QPixmap(size());
     pixmap.fill(Qt::darkGray);
-    QPainter painter(&pixmap);
 
-    painter.initFrom(this);
-    drawGrid(&painter);
-    drawTitle(&painter);
-    drawCurves(&painter);
-    update();
+
+    if(!force) {
+
+        QPainter painter(&pixmap);
+        painter.initFrom(this);
+        painter.setOpacity(0.1);
+        painter.drawImage(QPoint( width()/2 - 128 , height()/2 - 128), QImage(tr(":/images/refresh.png")) );
+        timer->start(500);
+
+        return;
+    }
+
+    draw();
+
+
+
 }
 
 void Plotter::drawGrid(QPainter *painter)
@@ -259,6 +279,7 @@ void Plotter::drawGrid(QPainter *painter)
     QPen quiteDark = palette().dark().color().light();
     QPen light = palette().light().color();
 
+
     for (int ti = 0; ti < settings.numXTicks; ++ti) {
         int x  = rect.left() + (ti *(rect.width() - 1)
                                / settings.numXTicks);
@@ -267,13 +288,23 @@ void Plotter::drawGrid(QPainter *painter)
         painter->setPen(quiteDark);
         painter->drawLine(x, rect.top(), x, rect.bottom());
         painter->setPen(light);
-        painter->drawLine(x, rect.bottom(), x, rect.bottom() + 5);
+        painter->drawLine(x, rect.bottom(), x, rect.bottom() +3);
         painter->drawText(x - 50, rect.bottom() + 5, 100, 20
                           , Qt::AlignCenter | Qt::AlignTop
-                          , QString::number(label));
+                          ,  QString::number(label));
 
 
     }
+
+{
+    QRect axisXrect = pixmap.rect();
+    axisXrect.setTop(axisXrect.bottom() - Margin+3);
+    axisXrect.setLeft(axisXrect.left() + Margin );
+    //axisXrect.setSize(QSize(axisXrect.width(), Margin));
+    painter->drawText(axisXrect
+                      ,Qt::AlignLeft | Qt::AlignVCenter
+                      ,  nameX);
+}
     for (int ti = 0; ti < settings.numYTicks; ++ti) {
         int y = rect.bottom() -(ti * ( rect.height() -1)
                                 / settings.numYTicks);
@@ -283,11 +314,29 @@ void Plotter::drawGrid(QPainter *painter)
         painter->setPen(quiteDark);
         painter->drawLine(rect.left(), y, rect.right() , y);
         painter->setPen(light);
-        painter->drawLine(rect.left()-5, y , rect.left(), y);
+        painter->drawLine(rect.left()-3, y , rect.left(), y);
         painter->drawText(rect.left() - Margin, y -10, Margin -5, 20
                           , Qt::AlignRight | Qt::AlignVCenter
                           , QString::number(label));
     }
+{
+    QRect axisYrect = pixmap.rect();
+    axisYrect.setTop(axisYrect.top() - Margin);
+
+    axisYrect.setSize(QSize( Margin, axisYrect.height() - Margin));
+
+    painter->save();
+    QPoint p = axisYrect.topLeft();
+    p.setX(p.x() + Margin/2 - 3);
+    p.setY(p.y() + axisYrect.height());
+    painter->translate(p);
+
+    painter->rotate(-90);
+    painter->drawText(0,0 ,  nameY);
+
+    painter->restore();
+
+}
     painter->drawRect(rect.adjusted(0,0,-1,-1));
 }
 
@@ -352,10 +401,28 @@ void Plotter::drawCurves(QPainter *painter)
 
 void Plotter::drawTitle(QPainter *painter)
 {
+
     QPen quiteDark = palette().dark().color().light();
     qDebug() << title;
+    painter->setFont(QFont("Arial", 16));
     painter->setPen(quiteDark);
-    painter->drawText(QPoint(Margin ,Margin -15)  , title);
+    QRect rect =  pixmap.rect();
+    rect.setHeight(Margin);
+    painter->drawText(rect, Qt::AlignHCenter|Qt::AlignVCenter  , tr("%1" ).arg(title));
+
+
+
+}
+
+void Plotter::draw()
+{
+    QPainter painter(&pixmap);
+    painter.initFrom(this);
+
+    drawGrid(&painter);
+    drawTitle(&painter);
+    drawCurves(&painter);
+    update();
 }
 
 

@@ -110,18 +110,18 @@ OpenFileForDemp::OpenFileForDemp(ProgSettings &ps, QWidget *parent) :
     if(ps.df2)
         this->df2LineEdit->setText( tr("%1").arg(ps.df2) );
 
-    this->dempFileLineEdit->setText(tr(ps.dempFileName.c_str()));
-    this->interFileLineEdit->setText(tr(ps.interFileName.c_str()));
-    this->clDataFileLineEdit->setText(tr(ps.clDataFileName.c_str()));
+    this->dempFileLineEdit->setText( QString::fromStdWString( ps.dempFileName));
+    this->interFileLineEdit->setText(QString::fromStdWString(ps.interFileName));
+    this->clDataFileLineEdit->setText(QString::fromStdWString(ps.clDataFileName));
 
 }
 
 
 void OpenFileForDemp::accept() {
 
-    ps.clDataFileName = clDataFileLineEdit->text().toStdString();
-    ps.interFileName = interFileLineEdit->text().toStdString();
-    ps.dempFileName = dempFileLineEdit->text().toStdString();
+    ps.clDataFileName = clDataFileLineEdit->text().toStdWString();
+    ps.interFileName = interFileLineEdit->text().toStdWString();
+    ps.dempFileName = dempFileLineEdit->text().toStdWString();
 
     ps.df1 = df1LineEdit->text().toDouble();
     ps.df2 = df2LineEdit->text().toDouble();
@@ -133,9 +133,9 @@ void OpenFileForDemp::accept() {
 
     QString message;
 
-    QFile clDataFile(ps.clDataFileName.c_str());
+    QFile clDataFile( QString::fromStdWString( ps.clDataFileName ));
     if(! clDataFile.exists() )
-        message += tr("Не найден файл содержащий CLDATA-код :\n\t%1\n").arg(ps.clDataFileName.c_str());
+        message += tr("Не найден файл содержащий CLDATA-код :\n\t%1\n").arg( QString::fromStdWString( ps.clDataFileName ));
 
     /*QFile interFile(ps.interFileName.c_str());
     if(! interFile.exists() )
@@ -182,15 +182,15 @@ void OpenFileForDemp::cancel()
 
 void OpenFileForDemp::browseCLDataFile()
 {
-    clDataFileLineEdit->setText( QFileDialog::getOpenFileName(this, tr("Выберите файл содержащий CLDATA-код"), tr("."), tr("CLDATA (*.pl0)")) );
+    clDataFileLineEdit->setText( QFileDialog::getOpenFileName(this, tr("Выберите файл содержащий CLDATA-код"), tr("."), tr("CLDATA (*.pl0);;Все файлы(*.*)")) );
 }
 
 void OpenFileForDemp::browseInterFile()
 {
-    interFileLineEdit->setText( QFileDialog::getSaveFileName(this, tr("Выберите путь для сохранения файла после интерполяции"), tr("."), tr("INTERPOL (*.pl1)")) );
+    interFileLineEdit->setText( QFileDialog::getSaveFileName(this, tr("Выберите путь для сохранения файла после интерполяции"), tr("."), tr("INTERPOL (*.pl1);;Все файлы(*.*)")) );
 }
 
 void OpenFileForDemp::browseDempFile()
 {
-    dempFileLineEdit->setText( QFileDialog::getSaveFileName(this, tr("Выберите путь для сохранения файла после демпфированрия"), tr("."), tr("DEMP (*.pl2)")) );
+    dempFileLineEdit->setText( QFileDialog::getSaveFileName(this, tr("Выберите путь для сохранения файла после демпфированрия"), tr("."), tr("DEMP (*.pl2);;Все файлы(*.*)")) );
 }

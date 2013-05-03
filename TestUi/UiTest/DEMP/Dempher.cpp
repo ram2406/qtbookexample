@@ -4,6 +4,8 @@
 #include <cstring>
 #include "dempher.h"
 
+void fun_output(std::string formatText , ...);
+
 unsigned short DempherClass::NCADR = 2000;
 
 DempherClass::DempherClass() {
@@ -18,7 +20,8 @@ void DempherClass::GetConfig(void)
 
   fconfig = fopen("c:\\interpol\\config.cfg", "rt");
   if(!fconfig)
-  { printf(getTextResCode(ERROR_05).c_str());
+  {
+      fun_output(getTextResCode(ERROR_05).c_str());
     exit(ERROR_05);
   }
 
@@ -284,20 +287,21 @@ result_code DempherClass::Dempher(FILE * fin, FILE * fout)
   return SUCCESS;
 }
 
-result_code DempherClass::exec(std::string filenameIn, std::string filenameOut, bool step , CONFIG &conf)
+result_code DempherClass::exec(std::wstring filenameIn, std::wstring filenameOut, bool step , CONFIG &conf)
 {
+
     FILE * fin;
     FILE * fout;
 
 
-    fin  = fopen(filenameIn.c_str(), "rb");
+    fin  = _wfopen(filenameIn.c_str(), L"rb");
     if(!fin)
     {
         printf(getTextResCode(ERROR_03).c_str());
         return ERROR_03;
     }
 
-    fout = fopen(filenameOut.c_str(), "w+b");
+    fout = _wfopen(filenameOut.c_str(), L"w+b");
     if(!fout)
     {
         printf(getTextResCode(ERROR_04).c_str());

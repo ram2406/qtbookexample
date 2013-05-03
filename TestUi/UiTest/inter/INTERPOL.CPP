@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <conio.h>
 #include <math.h>
-
+#include <cmath>
 #include <string>
 
 #define SUCCESS  0
@@ -46,7 +46,7 @@ void InterpolCircle(CADR cadr, FILE * fout);
 void InterpolPause(CADR cadr, FILE * fout);
 void InterpolTechn(CADR cadr, FILE * fout);
 
-void interpol(std::string finName, std::string foutName)
+void interpol(std::wstring finName, std::wstring foutName)
 { FILE * fin;
   FILE * fout;
   CADR   cadr;
@@ -59,16 +59,17 @@ void interpol(std::string finName, std::string foutName)
 
 	finish = 0;
 
-    fin  = fopen(finName.c_str(), "r");
+
+    fin  = _wfopen(finName.c_str(), L"r");
 	if(!fin)
 	{ 
-		throw "Не удалоссь открыть входящий файл";
+        throw L"Не удалоссь открыть входящий файл";
 	}
 
-    fout = fopen(foutName.c_str(), "w+b");
+    fout = _wfopen(foutName.c_str(), L"w+b");
 	if(!fout)
 	{ 
-		throw "Не удалоссь сохранить исходящий файл";
+        throw L"Не удалоссь сохранить исходящий файл";
 	}
     {
 	c = fgetc(fin);
@@ -82,11 +83,11 @@ void interpol(std::string finName, std::string foutName)
 	*/
 	if(c != '%')
 	{ 
-		throw "Не удалось найти специальный символ '%' в начале файла";
+        throw L"Не удалось найти специальный символ '%' в начале файла";
 	}
     while( c != 'N'  && c != EOF) c = fgetc(fin);
 
-    if(c == EOF) throw "Программа пуста";
+    if(c == EOF) throw L"Программа пуста";
     }
     fseek(fin, -1 , SEEK_CUR);
     //clrscr();
@@ -122,7 +123,7 @@ void interpol(std::string finName, std::string foutName)
 			else if(cadr.G == 17 ||	cadr.G == 18 ||	cadr.G == 19) G_2 = cadr.G;
 					 else
 					 { 
-						throw "Не известная команда";
+                        throw L"Не известная команда";
 					 }
 		}
 
@@ -428,11 +429,12 @@ void InterpolCircle(CADR cadr, FILE * fout)
 
 	//€­вҐаЇ®«пжЁп
 	if(G_2 == 17)
-	{ if(cadr.I != 0 && cadr.J != 0) R = sqrt(cadr.I * cadr.I + cadr.J * cadr.J);
+    { if(cadr.I != 0 && cadr.J != 0) R = sqrt(double(cadr.I * cadr.I + cadr.J * cadr.J));
 		else if(cadr.I != 0 && cadr.J == 0) R = cadr.I;
 				 else if(cadr.I == 0 && cadr.J != 0) R = cadr.J;
 							else
-							{ throw "Не правильно заданы геометрическая инйормация для круговой интерполяции!";
+                            {
+                                throw L"Не правильно заданы геометрическая инйормация для круговой интерполяции!";
 								
 							}
 
@@ -497,7 +499,7 @@ void InterpolCircle(CADR cadr, FILE * fout)
 	}
 
 	if(G_2 == 18)
-	{ if(cadr.I != 0 && cadr.K != 0) R = sqrt(cadr.I * cadr.I + cadr.K * cadr.K);
+    { if(cadr.I != 0 && cadr.K != 0) R = sqrt(double ( cadr.I * cadr.I + cadr.K * cadr.K));
 		else if(cadr.I != 0 && cadr.K == 0) R = cadr.I;
 				 else if(cadr.I == 0 && cadr.K != 0) R = cadr.K;
 							else
@@ -567,14 +569,14 @@ void InterpolCircle(CADR cadr, FILE * fout)
 	}
 
 	if(G_2 == 19)
-	{ if(cadr.J != 0 && cadr.K != 0) R = sqrt(cadr.J * cadr.J + cadr.K * cadr.K);
+    { if(cadr.J != 0 && cadr.K != 0) R = sqrt(double( cadr.J * cadr.J + cadr.K * cadr.K));
 		else if(cadr.J != 0 && cadr.K == 0) R = cadr.J;
 				 else if(cadr.J == 0 && cadr.K != 0) R = cadr.K;
 							else
                             {
-                                fun_output("\nERROR_08: ­ҐЇа ўЁ«м­® § ¤ ­  ЈҐ®¬ҐваЁзҐбЄ п Ё­д®а¬ жЁп ¤«п ЄагЈ®ў®© Ё­вҐаЇ®«пжЁЁ!");
+                                fun_output("\nERROR_08: неправиль­о задана­  геометрическая и­формация для круговой и­терполяции!");
                                 //exit(ERROR_08);
-                                throw "\nERROR_08: ­ҐЇа ўЁ«м­® § ¤ ­  ЈҐ®¬ҐваЁзҐбЄ п Ё­д®а¬ жЁп ¤«п ЄагЈ®ў®© Ё­вҐаЇ®«пжЁЁ!";
+                                throw L"Неправиль­о задана­  геометрическая и­формация для круговой и­терполяции!";
 							}
 
 		if(cadr.Y > 0 && cadr.Z < 0)
@@ -746,7 +748,7 @@ void InterpolTechn(CADR cadr, FILE * fout)
 
 	if(cadr.M == 2)
     {
-        fun_output("\nЌ ©¤Ґ­ Є ¤а б Є®¬ ­¤®© ®бв ­®ў !");
+        fun_output("\nНайден­ кадр с коман­дой остан­ова!");
 		outByte = 15;
 		fputc(outByte, fout);
 		finish = 1;

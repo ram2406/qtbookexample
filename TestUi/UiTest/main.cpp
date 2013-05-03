@@ -48,7 +48,7 @@ void graph() {
 }
 
 void mainWindow() {
-    //setlocale(LC_CTYPE, "1251");
+    setlocale(LC_CTYPE, "1251");
 
     MainWindow *w = new MainWindow;
     w->show();

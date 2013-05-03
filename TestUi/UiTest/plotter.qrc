@@ -3,5 +3,7 @@
         <file>images/zoomIn.png</file>
         <file>images/zoomout.png</file>
         <file>images/main.PNG</file>
+        <file>images/process.png</file>
+        <file>images/refresh.png</file>
     </qresource>
 </RCC>

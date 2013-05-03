@@ -101,6 +101,9 @@ private:
     QAction *autoRecalcAction;
     QAction *aboutAction;
     QAction *closeAction;
+
+
+
 };
 
 #endif // MAINWINDOW_H

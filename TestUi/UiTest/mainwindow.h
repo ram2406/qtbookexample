@@ -19,7 +19,7 @@ signals:
 public slots:
     void loadCLDATA();
     void interpolExec();
-    void loadGraph(std::string dempFileName);
+    void loadGraph();
     void help();
 
     void setDrawNode(bool value);
@@ -34,11 +34,19 @@ private:
 
     void createCentralWidget();
 
+    void loadGraphDemp(std::wstring dempFileName, Plotter *pl);
+    void loadGraphInterpol(std::wstring interpolFileName, Plotter *pl);
+    void loadGraphTopView();
+    void loadGraphSideView();
+
     void createActions();
     void createMenues();
     //void createContextMenu();
     void createToolBars();
     void createStatusBar();
+
+    void saveSettings();
+    void loadSettings();
 
     QAction *settingsAction;
     QAction *closeAction;
@@ -57,7 +65,12 @@ private:
     QAction *startAction;
 
     QTableWidget *table;
-    Plotter *pl;
+    Plotter *plDemp;
+
+    Plotter *plInterpol;
+    Plotter *plTopView;
+    Plotter *plSideView;
+
 
     bool showX, showY , showZ , showNode;
 

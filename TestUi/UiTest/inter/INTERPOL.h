@@ -1,3 +1,3 @@
 #include <string>
 
-void interpol(std::string finName, std::string foutName);
+void interpol(std::wstring finName, std::wstring foutName);

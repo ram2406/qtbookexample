@@ -5,9 +5,14 @@
 #include <QPixmap>
 #include <QVector>
 #include <QWidget>
+#include <QThread>
+#include <QTimer>
+
 
 class QToolButton;
 class PlotSettings;
+class DrawPixmapThread;
+
 
 class Plotter : public QWidget
 {
@@ -23,12 +28,13 @@ public:
     void setTitle(const QString& title);
     void setVisibleCurve(int id, bool value);
     void setDrawNode(bool value);
-
+    void setAxisName(const QString& nameX, const QString& nameY) { this->nameX = nameX; this->nameY = nameY;}
 public slots:
     void zoomIn();
     void zoomOut();
     void setFastMode(bool value);
-
+    void forceRefresh() {refreshPixmap(true);}
+    void draw();
 protected:
     void paintEvent(QPaintEvent *e);
     void resizeEvent(QResizeEvent *e);
@@ -40,11 +46,13 @@ protected:
 
 private:
     void updateRubberBandRegion();
-    void refreshPixmap();
+    void refreshPixmap(bool force = false);
     void drawGrid(QPainter *painter);
     void drawCurves(QPainter *painter);
 
     QString title;
+    QString nameX;
+    QString nameY;
 
     void drawTitle(QPainter* painter);
 
@@ -62,10 +70,17 @@ private:
 
     enum { Margin = 50 };
 
+    struct {
+        QTimer *timer;
+        bool timerEnable;
+    };
+    DrawPixmapThread *thread;
+
 signals:
     
+private slots:
+    void timerEnd() { forceRefresh(); timer->stop();}
 
-    
 };
 
 class PlotSettings
@@ -87,5 +102,6 @@ public:
 private :
     static void adjustAxis(double &min, double &max, int &numTicks);
 };
+
 
 #endif // PLOTTER_H
