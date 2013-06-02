@@ -36,8 +36,8 @@ private:
 
     void loadGraphDemp(std::wstring dempFileName, Plotter *pl);
     void loadGraphInterpol(std::wstring interpolFileName, Plotter *pl);
-    void loadGraphTopView();
-    void loadGraphSideView();
+    void loadGraphTopView(std::wstring dempFileName, Plotter *pl);
+    void loadGraphSideView(std::wstring dempFileName, Plotter *pl);
 
     void createActions();
     void createMenues();

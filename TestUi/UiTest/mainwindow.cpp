@@ -90,7 +90,8 @@ void MainWindow::loadGraph()
 {
     loadGraphInterpol(this->settings.interFileName, plInterpol);
     loadGraphDemp(this->settings.dempFileName, plDemp);
-
+    loadGraphTopView(this->settings.dempFileName, plTopView);
+    loadGraphSideView(this->settings.dempFileName, plSideView);
 }
 
 void MainWindow::help()
@@ -217,8 +218,10 @@ void MainWindow::createCentralWidget()
 
     }
     {//demp
-        QDockWidget *dc2 = new QDockWidget(tr("График"));
+        QDockWidget *dc2 = new QDockWidget(tr("График после демпфирования"));
         dc2->setObjectName(tr("plDempDock"));
+        plDemp->setTitle(tr("График после демпфирования"));
+        plDemp->setAxisName( tr("Скорось подачи импульсов"), tr("Ось смещения по Х,Y,Z"));
         dc2->setWidget(plDemp);
         dc2->setAllowedAreas(Qt::AllDockWidgetAreas);
 
@@ -226,29 +229,34 @@ void MainWindow::createCentralWidget()
 
     }
     {//interpol
-        QDockWidget *dc2 = new QDockWidget(tr("График"));
+        QDockWidget *dc2 = new QDockWidget(tr("График без демпфирования"));
         dc2->setObjectName(tr("plInterpolDock"));
         dc2->setWidget(plInterpol);
+        plInterpol->setTitle(tr("График без демпфирования"));
+        plInterpol->setAxisName( tr("Скорось подачи импульсов"), tr("Ось смещения по Х,Y,Z"));
         dc2->setAllowedAreas(Qt::AllDockWidgetAreas);
 
         this->addDockWidget(Qt::RightDockWidgetArea,dc2);
 
     }
     {//top view
-        QDockWidget *dc2 = new QDockWidget(tr("График"));
+        QDockWidget *dc2 = new QDockWidget(tr("График - вид сверху"));
         dc2->setObjectName(tr("plTopViewDock"));
         dc2->setWidget(plTopView);
+        plTopView->setAxisName( tr("Ось смещения по Х"), tr("Ось смещения по Y"));
+        plTopView->setTitle(tr("График - вид сверху"));
         dc2->setAllowedAreas(Qt::AllDockWidgetAreas);
 
         this->addDockWidget(Qt::RightDockWidgetArea,dc2);
 
     }
     {//side view
-        QDockWidget *dc2 = new QDockWidget(tr("График"));
+        QDockWidget *dc2 = new QDockWidget(tr("График - вид сбоку"));
         dc2->setObjectName(tr("plSideViewDock"));
         dc2->setWidget(plSideView);
         dc2->setAllowedAreas(Qt::AllDockWidgetAreas);
-
+        plSideView->setAxisName( tr("Ось смещения по Х"), tr("Ось смещения по Z"));
+        plSideView->setTitle(tr("График - вид сбоку"));
         this->addDockWidget(Qt::RightDockWidgetArea,dc2);
 
     }
@@ -271,7 +279,7 @@ void MainWindow::loadGraphDemp(std::wstring dempFileName, Plotter *pl)
 
     unsigned int curPos = 0;
 
-    int maxY = 0;
+    int maxY = 0, minY = 0;
 
     int X = 0, Y = 0 , Z = 0;
 
@@ -284,20 +292,26 @@ void MainWindow::loadGraphDemp(std::wstring dempFileName, Plotter *pl)
         if(byte == 15 )
             continue;
 
-        if(byte & 1)  X++;
-        if(byte & 2)  X--;
+        if(byte & 1)
+            X++;
+        if(byte & 2)
+            X--;
 
         if(byte & 1 || byte & 2)
             dataX.append(QPointF(curPos , X));
 
-        if(byte & 4)  Y++;
-        if(byte & 8)  Y--;
+        if(byte & 4)
+            Y++;
+        if(byte & 8)
+            Y--;
 
         if(byte & 4 || byte & 8)
             dataY.append(QPointF(curPos , Y));
 
-        if(byte & 16) Z++;
-        if(byte & 32) Z--;
+        if(byte & 16)
+            Z++;
+        if(byte & 32)
+            Z--;
 
         if(byte & 16 || byte & 32)
             dataZ.append(QPointF(curPos , Z));
@@ -306,13 +320,17 @@ void MainWindow::loadGraphDemp(std::wstring dempFileName, Plotter *pl)
         maxY = std::max(maxY, Y);
         maxY = std::max(maxY, Z);
 
+        minY = std::min(minY, X);
+        minY = std::min(minY, Y);
+        minY = std::min(minY, Z);
+
         curPos++;
     }
     PlotSettings set;
     set.maxX = curPos;
     set.maxY = maxY;
     set.minX = 0;
-    set.minY = 0;
+    set.minY = minY;
 
     pl->setPlotSettings(set);
     pl->setCurveData(0,dataX);
@@ -336,7 +354,7 @@ void MainWindow::loadGraphInterpol(std::wstring interpolFileName, Plotter *pl)
 
     unsigned int curPos = 0;
 
-    int maxY = 0;
+    int maxY = 0, minY =0;
 
     int X = 0, Y = 0 , Z = 0;
 
@@ -349,20 +367,26 @@ void MainWindow::loadGraphInterpol(std::wstring interpolFileName, Plotter *pl)
         if(byte == 15)
             continue;
 
-        if(byte & 1)  X++;
-        if(byte & 2)  X--;
+        if(byte & 1)
+            X++;
+        if(byte & 2)
+            X--;
 
         if(byte & 1 || byte & 2)
             dataX.append(QPointF(curPos , X));
 
-        if(byte & 4)  Y++;
-        if(byte & 8)  Y--;
+        if(byte & 4)
+            Y++;
+        if(byte & 8)
+            Y--;
 
         if(byte & 4 || byte & 8)
             dataY.append(QPointF(curPos , Y));
 
-        if(byte & 16) Z++;
-        if(byte & 32) Z--;
+        if(byte & 16)
+            Z++;
+        if(byte & 32)
+            Z--;
 
         if(byte & 16 || byte & 32)
             dataZ.append(QPointF(curPos , Z));
@@ -371,13 +395,17 @@ void MainWindow::loadGraphInterpol(std::wstring interpolFileName, Plotter *pl)
         maxY = std::max(maxY, Y);
         maxY = std::max(maxY, Z);
 
+        minY = std::min(minY, X);
+        minY = std::min(minY, Y);
+        minY = std::min(minY, Z);
+
         curPos++;
     }
     PlotSettings set;
     set.maxX = curPos;
     set.maxY = maxY;
     set.minX = 0;
-    set.minY = 0;
+    set.minY = minY;
 
     pl->setPlotSettings(set);
     pl->setCurveData(0,dataX);
@@ -386,12 +414,107 @@ void MainWindow::loadGraphInterpol(std::wstring interpolFileName, Plotter *pl)
     fclose(dempf);
 }
 
-void MainWindow::loadGraphTopView()
+void MainWindow::loadGraphTopView(std::wstring dempFileName, Plotter *pl)
 {
+    qDebug()<< tr("Строим графитк после интерполяции , файл : %1").arg(QString::fromStdWString(dempFileName));
+    FILE* dempf =_wfopen(dempFileName.c_str(), L"rb");
+    if(!dempf) throw L"Не удалось открыть файл";
+    int byte ;
+
+
+
+    QVector<QPointF> dataX(2000);
+
+    int maxY = 0, maxX = 0, minY = 0, minX =0;
+
+    int X = 0, Y = 0;
+
+    dataX.append(QPointF( X , Y));
+
+    while ( (byte = fgetc(dempf)) != EOF ) {
+
+        //qDebug()<< tr("Байт : %1").arg(byte);
+        if(!byte || byte == 15)
+            continue;
+
+        if(byte & 1)  X++;
+        if(byte & 2)  X--;
+
+        if(byte & 4)  Y++;
+        if(byte & 8)  Y--;
+
+
+        maxX = std::max(maxX, X);
+        maxY = std::max(maxY, Y);
+
+        minX = std::min(minX, X);
+        minY = std::min(minY, Y);
+
+
+        dataX.append(QPointF(X , Y));
+
+
+    }
+    PlotSettings set;
+    set.maxX = maxX;
+    set.maxY = maxY;
+    set.minX = minX;
+    set.minY = minY;
+
+    pl->setPlotSettings(set);
+    pl->setCurveData(0,dataX);
+    fclose(dempf);
 }
 
-void MainWindow::loadGraphSideView()
+void MainWindow::loadGraphSideView(std::wstring dempFileName, Plotter *pl)
 {
+    qDebug()<< tr("Строим графитк после интерполяции , файл : %1").arg(QString::fromStdWString(dempFileName));
+    FILE* dempf =_wfopen(dempFileName.c_str(), L"rb");
+    if(!dempf) throw L"Не удалось открыть файл";
+    int byte ;
+
+
+
+    QVector<QPointF> dataX(2000);
+
+    int maxZ = 0, maxX = 0, minX = 0, minZ = 0;
+
+    int X = 0, Z = 0;
+
+    dataX.append(QPointF( X , Z));
+
+    while ( (byte = fgetc(dempf)) != EOF ) {
+
+        //qDebug()<< tr("Байт : %1").arg(byte);
+        if(!byte || byte == 15)
+            continue;
+
+        if(byte & 1)  X++;
+        if(byte & 2)  X--;
+
+        if(byte & 16)  Z++;
+        if(byte & 32)  Z--;
+
+
+        maxX = std::max(maxX, X);
+        maxZ = std::max(maxZ, Z);
+
+        minX = std::min(minX, X);
+        minZ = std::min(minZ, Z);
+
+        dataX.append(QPointF(X , Z));
+
+
+    }
+    PlotSettings set;
+    set.maxX = maxX;
+    set.maxY = maxZ;
+    set.minX = minX;
+    set.minY = minZ;
+
+    pl->setPlotSettings(set);
+    pl->setCurveData(0,dataX);
+    fclose(dempf);
 }
 
 void MainWindow::createActions()
@@ -517,6 +640,7 @@ void MainWindow::saveSettings()
 
 void MainWindow::loadSettings()
 {
+    return;
     QSettings settings("Software Ram2406", "ModelProc");
     restoreGeometry(settings.value( "geometry").toByteArray());
 

@@ -32,7 +32,7 @@ OpenFileForDemp::OpenFileForDemp(ProgSettings &ps, QWidget *parent) :
     }
     {
     QLabel *df1Label = new QLabel(this);
-    df1Label->setText(tr("Минимальная скорость обработки станка:"));
+    df1Label->setText(tr("Допустимый перепад скоростей:"));
 
     df1LineEdit = new QLineEdit(this);
     df1LineEdit->setInputMask(tr("00000000.00"));
@@ -41,7 +41,7 @@ OpenFileForDemp::OpenFileForDemp(ProgSettings &ps, QWidget *parent) :
 
 
     QLabel *df2Label = new QLabel(this);
-    df2Label->setText(tr("Максимальная скорость обработки станка:"));
+    df2Label->setText(tr("Минимальное приращение скорости при демпфировании:"));
 
     df2LineEdit = new QLineEdit(this);
     df2LineEdit->setInputMask(tr("00000000.00"));

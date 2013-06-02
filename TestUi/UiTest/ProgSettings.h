@@ -43,6 +43,7 @@ struct ProgSettings {
     }
 
     inline void readSettings(QSettings &settings) {
+        return;
         clDataFileName = settings.value("clDataFileName").toString().toStdWString();
         interFileName = settings.value("interFileName").toString().toStdWString();
         dempFileName = settings.value("dempFileName").toString().toStdWString();

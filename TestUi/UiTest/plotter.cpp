@@ -327,7 +327,7 @@ void Plotter::drawGrid(QPainter *painter)
 
     painter->save();
     QPoint p = axisYrect.topLeft();
-    p.setX(p.x() + Margin/2 - 3);
+    p.setX(p.x() + Margin/2 - 16);
     p.setY(p.y() + axisYrect.height());
     painter->translate(p);
 
